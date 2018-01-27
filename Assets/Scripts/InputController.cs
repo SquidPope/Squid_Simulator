@@ -43,22 +43,21 @@ public class InputController : MonoBehaviour
                     if (current != null && (current.HasNeuron || current.canTurnOn))
                     {
                         clickedNode = current;
-                        clickedNode.SelectNode();
-                    }
-                    /*
-                    if (clickedNode != null && !clickedNode.HasNeuron && clickedNode.canTurnOn)
-                    {
                         clickedNode.HasNeuron = true;
                         clickedNode.SelectNode();
                     }
-                    */
                 }
             }
             else if (Input.GetMouseButtonUp(1))
             {
                 Node current = GetNodeUnderMouse();
                 if (current != null)
+                {
                     current.HasNeuron = false;
+
+                    if (clickedNode == current)
+                        clickedNode = null;
+                } 
             }
             #endregion
 

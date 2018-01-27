@@ -6,6 +6,9 @@ public class PuzzleController : MonoBehaviour
     [SerializeField]
     Squid player, goal;
 
+    [SerializeField]
+    GameObject win;
+
     PuzzleType currentPuzzle = PuzzleType.None;
     bool isSolved = false;
     float delay = 5f;
@@ -31,9 +34,15 @@ public class PuzzleController : MonoBehaviour
         return currentPuzzle;
     }
 
+    public void Start()
+    {
+        win.SetActive(false);
+    }
+
     public void Solve()
     {
         isSolved = true;
+        win.SetActive(true);
         currentPuzzle = PuzzleType.None;
         GameController.Instance.Score++;
     }
@@ -106,6 +115,7 @@ public class PuzzleController : MonoBehaviour
             if (solveTimer >= delay)
             {
                 isSolved = false;
+                win.SetActive(false);
 
                 //ToDo: randomize type of puzzle.
                 StartMatchPuzzle();
