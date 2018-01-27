@@ -46,6 +46,21 @@ public class Node : MonoBehaviour
         }
     }
 
+    public bool IsConnectedToNode(Node n)
+    {
+        if (connectedNodes.Contains(n))
+            return true;
+
+        return false;
+    }
+
+    //ToDo: use click and drag
+    /*
+     * OnMouseDown: remove neuron if it exsists (effect on/near mouse to make obvious
+     * OnMouseUp: down was on a connected node and this node is off, turn it on (if this node is on, revert)
+     */
+
+    /*
     private void OnMouseUp()
     {
         if (HasNeuron)
@@ -83,5 +98,5 @@ public class Node : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }
