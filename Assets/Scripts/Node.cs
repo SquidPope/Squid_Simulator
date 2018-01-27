@@ -44,6 +44,7 @@ public class Node : MonoBehaviour
             LineRenderer line = go.GetComponent<LineRenderer>();
             line.SetPosition(0, gameObject.transform.position);
             line.SetPosition(1, n.transform.position);
+            line.transform.parent = gameObject.transform;
         }
     }
 

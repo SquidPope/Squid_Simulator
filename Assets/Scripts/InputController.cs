@@ -1,22 +1,32 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
     [SerializeField]
     GameObject quitDialogue;
 
+    [SerializeField]
+    Text switchStateButtonLabel;
+
     Node clickedNode = null;
 
     private void Start()
     {
         quitDialogue.SetActive(false);
+        if (GameController.Instance.State == GameState.Brain)
+            switchStateButtonLabel.text = "Squid View";
+        else if (GameController.Instance.State == GameState.Squid)
+            switchStateButtonLabel.text = "Brain View";
     }
 
     void Update()
     {
 		if (GameController.Instance.State == GameState.Brain)
         {
-            //ToDo: start some nodes on, or right click to turn on.
+            //ToDo: start some nodes on, or just left click to turn on?
+
+            #region Mouse State
             if (Input.GetMouseButtonDown(0))
             {
                 clickedNode = GetNodeUnderMouse();
@@ -26,8 +36,7 @@ public class InputController : MonoBehaviour
                     clickedNode = null;
                 }
             }
-
-            if (Input.GetMouseButtonUp(0))
+            else if (Input.GetMouseButtonUp(0))
             {
                 if (clickedNode != null)
                 {
@@ -40,6 +49,13 @@ public class InputController : MonoBehaviour
                     }
                 }
             }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                Node current = GetNodeUnderMouse();
+                if (current != null)
+                    current.HasNeuron = false;
+            }
+            #endregion
 
             if (Input.GetKeyUp(KeyCode.Escape))
             {
@@ -64,6 +80,20 @@ public class InputController : MonoBehaviour
     public void NoQuit()
     {
         quitDialogue.SetActive(false);
+    }
+
+    public void SwitchState()
+    {
+        if (GameController.Instance.State == GameState.Brain)
+        {
+            switchStateButtonLabel.text = "Brain View";
+            GameController.Instance.State = GameState.Squid;
+        }
+        else if (GameController.Instance.State == GameState.Squid)
+        {
+            switchStateButtonLabel.text = "Squid View";
+            GameController.Instance.State = GameState.Brain;
+        }
     }
 
     Node GetNodeUnderMouse()

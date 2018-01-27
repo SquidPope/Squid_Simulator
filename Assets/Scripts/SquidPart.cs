@@ -34,6 +34,7 @@ public class SquidPart : MonoBehaviour {
         return type;
     }
 
+    //ToDo: try to do this on a part changing, not every frame.
     private void Update()
     {
         Color c = Color.black;
