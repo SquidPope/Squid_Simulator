@@ -3,7 +3,6 @@
 public enum GameState { Brain, MainMenu, Squid }
 public class GameController : MonoBehaviour
 {
-
     GameState state;
     int neuronLimit = 6;
     public int totalNeurons = 0;
@@ -16,6 +15,12 @@ public class GameController : MonoBehaviour
         {
             state = value;
             UIController.Instance.UpdateUI();
+
+            if (state == GameState.Squid && PuzzleController.Instance.GetCurrentPuzzleType() == PuzzleType.None)
+            {
+                //ToDo: randomize
+                PuzzleController.Instance.StartMatchPuzzle();
+            }
         }
     }
 

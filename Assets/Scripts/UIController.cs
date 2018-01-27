@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    GameObject brainStateObject, instructions, mainMenuObject, squidStateObject, switchButton;
+    GameObject brainStateObject, instructions, helpButton, mainMenuObject, squidStateObject, switchButton;
 
     [SerializeField]
     Text switchStateButtonLabel;
@@ -23,13 +23,19 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void HelpButton()
+    {
+        instructions.SetActive(!instructions.activeSelf);
+    }
+
     public void UpdateUI()
     {
         GameState state = GameController.Instance.State;
         if (state == GameState.Brain)
         {
             brainStateObject.SetActive(true);
-            instructions.SetActive(true);
+            helpButton.SetActive(true);
+            mainMenuObject.SetActive(false);
             squidStateObject.SetActive(false);
             switchButton.SetActive(true);
             switchStateButtonLabel.text = "Squid View";
@@ -37,14 +43,16 @@ public class UIController : MonoBehaviour
         else if (state == GameState.MainMenu)
         {
             brainStateObject.SetActive(false);
-            instructions.SetActive(false);
+            helpButton.SetActive(false);
+            mainMenuObject.SetActive(true);
             squidStateObject.SetActive(false);
             switchButton.SetActive(false);
         }
         else if (state == GameState.Squid)
         {
             brainStateObject.SetActive(false);
-            instructions.SetActive(true);
+            helpButton.SetActive(true);
+            mainMenuObject.SetActive(false);
             squidStateObject.SetActive(true);
             switchButton.SetActive(true);
             switchStateButtonLabel.text = "Brain View";

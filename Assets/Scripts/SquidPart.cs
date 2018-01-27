@@ -22,7 +22,7 @@ public class SquidPart : MonoBehaviour {
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         rend = gameObject.GetComponent<Renderer>();
         rend.material.color = Color.black;

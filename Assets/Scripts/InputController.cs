@@ -17,27 +17,30 @@ public class InputController : MonoBehaviour
 		if (GameController.Instance.State == GameState.Brain)
         {
             //ToDo: start some nodes on, or just left click to turn on?
-
             #region Mouse State
             if (Input.GetMouseButtonDown(0))
-            {
-                clickedNode = GetNodeUnderMouse();
-                if (clickedNode != null && !clickedNode.HasNeuron && clickedNode.canTurnOn)
-                {
-                    clickedNode.HasNeuron = true;
-                    clickedNode = null;
-                }
-            }
-            else if (Input.GetMouseButtonUp(0))
             {
                 if (clickedNode != null)
                 {
                     Node current = GetNodeUnderMouse();
+                    if (current == null)
+                        return;
+
                     //check if the nodes are connected
                     if (current.IsConnectedToNode(clickedNode))
                     {
                         clickedNode.HasNeuron = false;
                         current.HasNeuron = true;
+
+                        clickedNode = null;
+                    }
+                }
+                else
+                {
+                    clickedNode = GetNodeUnderMouse();
+                    if (clickedNode != null && !clickedNode.HasNeuron && clickedNode.canTurnOn)
+                    {
+                        clickedNode.HasNeuron = true;
                     }
                 }
             }
