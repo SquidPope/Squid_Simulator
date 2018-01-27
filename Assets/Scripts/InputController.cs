@@ -60,20 +60,20 @@ public class InputController : MonoBehaviour
                 } 
             }
             #endregion
+        }
 
-            if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (quitDialogue.activeSelf == true)
             {
-                if (quitDialogue.activeSelf == true)
-                {
-                    Application.Quit();
-                }
-                else
-                {
-                    quitDialogue.SetActive(true);
-                }
+                Application.Quit();
+            }
+            else
+            {
+                quitDialogue.SetActive(true);
             }
         }
-	}
+    }
 
     public void PlayButton()
     {
