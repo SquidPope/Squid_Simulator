@@ -2,9 +2,23 @@
 
 public class Win : MonoBehaviour
 {
+    [SerializeField]
+    Material particleMat;
+
     ParticleSystem ps;
-    float delay;
+    Renderer particleRenderer;
+    float delay = 1f;
     float delayTimer;
+
+    private void Start()
+    {
+        ps = gameObject.GetComponent<ParticleSystem>();
+
+        if (ps == null)
+            Debug.Log("Error! No particle system for the win");
+
+        particleRenderer = ps.GetComponent<Renderer>();
+    }
 
     private void Update()
     {
@@ -12,8 +26,8 @@ public class Win : MonoBehaviour
         if (delayTimer >= delay)
         {
             delayTimer = 0f;
-            ps.startColor = RandomColor();
-            ps.Emit(10);
+            particleMat.color = RandomColor();
+            ps.Emit(20);
         }
     }
 

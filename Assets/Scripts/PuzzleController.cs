@@ -42,13 +42,17 @@ public class PuzzleController : MonoBehaviour
     public void Solve()
     {
         isSolved = true;
+        Debug.Log("YAY");
         win.SetActive(true);
-        currentPuzzle = PuzzleType.None;
         GameController.Instance.Score++;
+        currentPuzzle = PuzzleType.None;
     }
 
     public void StartMatchPuzzle()
     {
+        if (isSolved)
+            return;
+
         //Randomize goal colors
         for (int i = 0; i < (int)SquidPartType.Total; i++)
         {
@@ -101,10 +105,8 @@ public class PuzzleController : MonoBehaviour
                 return;
         }
 
-        isSolved = true;
-        Debug.Log("YAY");
-        GameController.Instance.Score++;
-        currentPuzzle = PuzzleType.None;
+        Solve();
+        
     }
 
     private void Update()
