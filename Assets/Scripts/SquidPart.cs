@@ -6,12 +6,32 @@ public class SquidPart : MonoBehaviour {
     [SerializeField]
     Node r, g, b;
 
+    [SerializeField]
+    SquidPartType type;
+
     Renderer rend;
+    Color partColor;
+
+    public Color PartColor
+    {
+        get { return partColor; }
+        set
+        {
+            partColor = value;
+            rend.material.color = partColor;
+        }
+    }
 
     private void Start()
     {
         rend = gameObject.GetComponent<Renderer>();
         rend.material.color = Color.black;
+        partColor = rend.material.color;
+    }
+
+    public SquidPartType GetSquidPartType()
+    {
+        return type;
     }
 
     private void Update()
@@ -27,6 +47,6 @@ public class SquidPart : MonoBehaviour {
         if (b.HasNeuron)
             c.b = 100;
 
-        rend.material.color = c;
+        PartColor = c;
     }
 }

@@ -2,17 +2,25 @@
 
 public class InputController : MonoBehaviour
 {
+    [SerializeField]
+    GameObject quitDialogue;
+
     Node clickedNode = null;
 
-	void Update()
+    private void Start()
     {
-		if (GameController.Instance.state == GameState.Brain)
+        quitDialogue.SetActive(false);
+    }
+
+    void Update()
+    {
+		if (GameController.Instance.State == GameState.Brain)
         {
             //ToDo: start some nodes on, or right click to turn on.
             if (Input.GetMouseButtonDown(0))
             {
                 clickedNode = GetNodeUnderMouse();
-                if (!clickedNode.HasNeuron)
+                if (clickedNode != null && !clickedNode.HasNeuron)
                 {
                     clickedNode.HasNeuron = true;
                     clickedNode = null;
@@ -32,8 +40,31 @@ public class InputController : MonoBehaviour
                     }
                 }
             }
+
+            if (Input.GetKeyUp(KeyCode.Escape))
+            {
+                if (quitDialogue.active == true)
+                {
+                    Application.Quit();
+                }
+                else
+                {
+                    quitDialogue.SetActive(true);
+                }
+            }
         }
 	}
+
+    public void YesQuit()
+    {
+        Debug.Log("Quit!");
+        Application.Quit();
+    }
+
+    public void NoQuit()
+    {
+        quitDialogue.SetActive(false);
+    }
 
     Node GetNodeUnderMouse()
     {

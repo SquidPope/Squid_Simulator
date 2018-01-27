@@ -285,6 +285,9 @@
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\InputController.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
+    <Compile Include="Assets\Scripts\PuzzleController.cs" />
+    <Compile Include="Assets\Scripts\Squid.cs" />
+    <Compile Include="Assets\Scripts\SquidComparer.cs" />
     <Compile Include="Assets\Scripts\SquidPart.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

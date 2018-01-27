@@ -34,6 +34,7 @@ public class Node : MonoBehaviour
         rend = gameObject.GetComponent<Renderer>();
         HasNeuron = false;
 
+        //ToDo: remove duplicate lines (there's a lot of them)
         foreach (Node n in connectedNodes)
         {
             if (n == null)
@@ -53,50 +54,4 @@ public class Node : MonoBehaviour
 
         return false;
     }
-
-    //ToDo: use click and drag
-    /*
-     * OnMouseDown: remove neuron if it exsists (effect on/near mouse to make obvious
-     * OnMouseUp: down was on a connected node and this node is off, turn it on (if this node is on, revert)
-     */
-
-    /*
-    private void OnMouseUp()
-    {
-        if (HasNeuron)
-        {
-            //error
-        }
-        else
-        {
-            bool switched = false;
-            HasNeuron = true;
-            //light up
-            foreach (Node n in connectedNodes)
-            {
-                if (n == null)
-                    continue;
-
-                //ToDo: Let the player choose where they want to move the neuron.
-                if (n.HasNeuron)
-                {
-                    n.HasNeuron = false;
-                    switched = true;
-                    break; //Only take one neuron
-                }
-            }
-
-            if (!switched)
-            {
-                if (GameController.Instance.totalNeurons + 1 > GameController.Instance.NeuronLimit)
-                {
-                    HasNeuron = false;
-                }
-                else
-                {
-                    GameController.Instance.totalNeurons++;
-                }
-            }
-        }
-    }*/
 }
