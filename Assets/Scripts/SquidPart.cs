@@ -41,14 +41,30 @@ public class SquidPart : MonoBehaviour {
         {
             Color c = Color.black;
 
-            if (r.HasNeuron)
-                c.r = 100;
+            if (r.HasNeuron && g.HasNeuron && b.HasNeuron)
+            {
+                c = Color.white;
+            }
+            else if (r.HasNeuron)
+            {
+                if (g.HasNeuron)
+                    c = Color.yellow;
+                else if (b.HasNeuron)
+                    c = Color.magenta;
+                else
+                    c = Color.red;
+            } 
+            else if (g.HasNeuron)
+            {
+                if (b.HasNeuron)
+                    c = Color.cyan;
+                else
+                    c = Color.green;
 
-            if (g.HasNeuron)
-                c.g = 100;
-
-            if (b.HasNeuron)
-                c.b = 100;
+                return;
+            }
+            else if (b.HasNeuron)
+                c = Color.blue;
 
             PartColor = c;
         }

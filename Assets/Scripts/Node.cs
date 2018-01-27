@@ -31,6 +31,11 @@ public class Node : MonoBehaviour
         }
     }
 
+    public void SelectNode()
+    {
+        rend.material.color = Color.yellow;
+    }
+
     private void Start()
     {
         rend = gameObject.GetComponent<Renderer>();

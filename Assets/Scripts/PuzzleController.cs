@@ -44,7 +44,6 @@ public class PuzzleController : MonoBehaviour
         for (int i = 0; i < (int)SquidPartType.Total; i++)
         {
             SquidPartType t = (SquidPartType)i;
-            Debug.Log("goal part color: " + goal.GetPartColor((SquidPartType)i));
 
             if (goal.GetPartColor((SquidPartType)i) == Color.clear)
             {
@@ -52,7 +51,6 @@ public class PuzzleController : MonoBehaviour
                 continue;
             }
             int rand = Random.Range(0, 7);
-            Debug.Log("rand: " + rand);
 
             switch (rand)
             {
@@ -86,15 +84,17 @@ public class PuzzleController : MonoBehaviour
         }
     }
 
-    bool CheckForMatch()
+    public void CheckForMatch()
     {
         for (int i = 0; i < (int)SquidPartType.Total; i++)
         {
             if (player.GetPartColor((SquidPartType)i) != goal.GetPartColor((SquidPartType)i))
-                return false;
+                return;
         }
 
-        return true;
+        isSolved = true;
+        Debug.Log("YAY");
+        currentPuzzle = PuzzleType.None;
     }
 
     private void Update()

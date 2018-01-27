@@ -17,6 +17,8 @@ public class InputController : MonoBehaviour
 		if (GameController.Instance.State == GameState.Brain)
         {
             //ToDo: start some nodes on, or just left click to turn on?
+
+            //ToDo: clickedNode should be a different color so the player knows what is selected.
             #region Mouse State
             if (Input.GetMouseButtonDown(0))
             {
@@ -37,11 +39,19 @@ public class InputController : MonoBehaviour
                 }
                 else
                 {
-                    clickedNode = GetNodeUnderMouse();
+                    Node current = GetNodeUnderMouse();
+                    if (current != null && (current.HasNeuron || current.canTurnOn))
+                    {
+                        clickedNode = current;
+                        clickedNode.SelectNode();
+                    }
+                    /*
                     if (clickedNode != null && !clickedNode.HasNeuron && clickedNode.canTurnOn)
                     {
                         clickedNode.HasNeuron = true;
+                        clickedNode.SelectNode();
                     }
+                    */
                 }
             }
             else if (Input.GetMouseButtonUp(1))
