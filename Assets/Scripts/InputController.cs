@@ -30,7 +30,7 @@ public class InputController : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 clickedNode = GetNodeUnderMouse();
-                if (clickedNode != null && !clickedNode.HasNeuron)
+                if (clickedNode != null && !clickedNode.HasNeuron && clickedNode.canTurnOn)
                 {
                     clickedNode.HasNeuron = true;
                     clickedNode = null;

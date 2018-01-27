@@ -16,4 +16,10 @@ public class Squid : MonoBehaviour
 
         return Color.clear; //No part will ever intentionally be clear.
     }
+
+    public void SetPartColor(SquidPartType type, Color c)
+    {
+        SquidPart part = parts.Find(x => x.GetSquidPartType() == type);
+        part.PartColor = c;
+    }
 }

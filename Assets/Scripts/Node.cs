@@ -9,6 +9,8 @@ public class Node : MonoBehaviour
     [SerializeField]
     GameObject linePrefab;
 
+    public bool canTurnOn;
+
     private bool hasNeuron;
     Renderer rend;
 
