@@ -7,6 +7,11 @@ public class Squid : MonoBehaviour
     [SerializeField]
     List<SquidPart> parts;
 
+    private void Awake()
+    {
+        foreach (SquidPart part in parts)
+            part.Init();
+    }
     public Color GetPartColor(SquidPartType type)
     {
         SquidPart part = parts.Find(x => x.GetSquidPartType() == type);

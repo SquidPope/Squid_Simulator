@@ -22,7 +22,7 @@ public class SquidPart : MonoBehaviour {
         }
     }
 
-    private void Awake()
+    public void Init()
     {
         rend = gameObject.GetComponent<Renderer>();
         rend.material.color = Color.black;
@@ -34,20 +34,24 @@ public class SquidPart : MonoBehaviour {
         return type;
     }
 
-    //ToDo: try to do this on a part changing, not every frame.
+    //ToDo: try to do this on a part changing, not every frame. (should only happen to player squid)
     private void Update()
     {
-        Color c = Color.black;
+        if (r != null && g != null && b != null)
+        {
+            Color c = Color.black;
 
-        if (r.HasNeuron)
-            c.r = 100;
+            if (r.HasNeuron)
+                c.r = 100;
 
-        if (g.HasNeuron)
-            c.g = 100;
+            if (g.HasNeuron)
+                c.g = 100;
 
-        if (b.HasNeuron)
-            c.b = 100;
+            if (b.HasNeuron)
+                c.b = 100;
 
-        PartColor = c;
+            PartColor = c;
+        }
     }
+
 }

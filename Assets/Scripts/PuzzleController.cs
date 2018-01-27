@@ -40,7 +40,6 @@ public class PuzzleController : MonoBehaviour
 
     public void StartMatchPuzzle()
     {
-
         //Randomize goal colors
         for (int i = 0; i < (int)SquidPartType.Total; i++)
         {
@@ -53,6 +52,7 @@ public class PuzzleController : MonoBehaviour
                 continue;
             }
             int rand = Random.Range(0, 7);
+            Debug.Log("rand: " + rand);
 
             switch (rand)
             {
@@ -79,9 +79,6 @@ public class PuzzleController : MonoBehaviour
                     break;
                 case 7:
                     goal.SetPartColor((SquidPartType)i, Color.white);
-                    break;
-                default:
-                    goal.SetPartColor((SquidPartType)i, Color.black);
                     break;
             }
 
