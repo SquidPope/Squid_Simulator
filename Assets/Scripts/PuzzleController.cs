@@ -9,10 +9,17 @@ public class PuzzleController : MonoBehaviour
     [SerializeField]
     GameObject win;
 
+
     PuzzleType currentPuzzle = PuzzleType.None;
     bool isSolved = false;
     float delay = 5f;
     float solveTimer = 0f;
+
+    [SerializeField]
+    GameObject fishies;
+
+    [SerializeField]
+    Fish topFish, leftFish, rightFish;
 
     private static PuzzleController instance;
     public static PuzzleController Instance
@@ -97,6 +104,28 @@ public class PuzzleController : MonoBehaviour
         }
     }
 
+    public void StartHelpPuzzle()
+    {
+        if (isSolved)
+            return;
+
+        currentPuzzle = PuzzleType.Help;
+
+        for (int i = 0; i < (int)SquidPartType.Total; i++)
+        {
+            goal.SetPartColor((SquidPartType)i, Color.grey);
+        }
+
+        fishies.SetActive(true);
+
+        topFish.Randomize();
+        leftFish.Randomize();
+        rightFish.Randomize();
+
+        //Get correct red/green/blue value for top, left, and right
+        //Start a timer?
+    }
+
     public void CheckForMatch()
     {
         for (int i = 0; i < (int)SquidPartType.Total; i++)
@@ -106,6 +135,44 @@ public class PuzzleController : MonoBehaviour
         }
 
         Solve();
+        
+    }
+
+    public void CheckHelp()
+    {
+        //check each player part against correct answer.
+        if (player.GetPartColor(SquidPartType.Top) == topFish.correctColor)
+        {
+            GameController.Instance.Score += topFish.correctValue;
+        }
+        else
+        {
+            GameController.Instance.Score += topFish.wrongValue;
+        }
+
+        if (player.GetPartColor(SquidPartType.Left) == leftFish.correctColor)
+        {
+            GameController.Instance.Score += leftFish.correctValue;
+        }
+        else
+        {
+            GameController.Instance.Score += leftFish.wrongValue;
+        }
+
+        if (player.GetPartColor(SquidPartType.Right) == rightFish.correctColor)
+        {
+            GameController.Instance.Score += rightFish.correctValue;
+        }
+        else
+        {
+            GameController.Instance.Score += rightFish.wrongValue;
+        }
+
+        //if there is a timer, and it runs out, penalty of ?? points here?
+        //if the player goes below a certain point value, game over?
+
+        Solve();
+
         
     }
 
@@ -120,7 +187,8 @@ public class PuzzleController : MonoBehaviour
                 win.SetActive(false);
 
                 //ToDo: randomize type of puzzle.
-                StartMatchPuzzle();
+                //StartMatchPuzzle();
+                StartHelpPuzzle();
             }
         }
     }

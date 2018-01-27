@@ -39,6 +39,7 @@ public class UIController : MonoBehaviour
         if (state == GameState.Brain)
         {
             brainStateObject.SetActive(true);
+            
             helpButton.SetActive(true);
             mainMenuObject.SetActive(false);
             scoreText.enabled = true;
