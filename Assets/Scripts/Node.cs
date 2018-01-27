@@ -36,7 +36,9 @@ public class Node : MonoBehaviour
 
         foreach (Node n in connectedNodes)
         {
-            //Physics2D.Raycast(gameObject.transform.position, n.gameObject.transform.position);
+            if (n == null)
+                continue;
+
             GameObject go = Instantiate(linePrefab);
             LineRenderer line = go.GetComponent<LineRenderer>();
             line.SetPosition(0, gameObject.transform.position);
@@ -57,6 +59,10 @@ public class Node : MonoBehaviour
             //light up
             foreach (Node n in connectedNodes)
             {
+                if (n == null)
+                    continue;
+
+                //ToDo: Let the player choose where they want to move the neuron.
                 if (n.HasNeuron)
                 {
                     n.HasNeuron = false;
