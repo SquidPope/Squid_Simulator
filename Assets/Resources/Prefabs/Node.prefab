@@ -71,6 +71,7 @@ MonoBehaviour:
   connectedNodes:
   - {fileID: 0}
   - {fileID: 0}
+  linePrefab: {fileID: 1788533076924964, guid: a138b4f2e8d5a324ba4d0087838f9d59, type: 2}
 --- !u!212 &212214139127926824
 SpriteRenderer:
   m_ObjectHideFlags: 1

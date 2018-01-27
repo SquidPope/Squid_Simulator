@@ -4,6 +4,10 @@ public enum GameState { Brain, Squid }
 public class GameController : MonoBehaviour
 {
     GameState state;
+    int neuronLimit = 2;
+    public int totalNeurons = 0;
+
+    public int NeuronLimit { get { return neuronLimit; } }
 
     static GameController instance;
     public static GameController Instance
