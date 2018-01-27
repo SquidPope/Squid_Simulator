@@ -1,16 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SquidComparer : MonoBehaviour {
+public enum PuzzleType { Help, Match }
+public class PuzzleController : MonoBehaviour
+{
+    [SerializeField]
+    Squid player, goal;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    PuzzleType currentPuzzle = PuzzleType.Match; //ToDo: randomize on start when both types are confirmed.
+
+    bool CheckForMatch()
+    {
+        for (int i = 0; i < (int)SquidPartType.Total; i++)
+        {
+            if (player.GetPartColor((SquidPartType)i) != goal.GetPartColor((SquidPartType)i))
+                return false;
+        }
+
+        return true;
+    }
 }
