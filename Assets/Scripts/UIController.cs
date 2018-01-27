@@ -7,7 +7,7 @@ public class UIController : MonoBehaviour
     GameObject brainStateObject, instructions, helpButton, mainMenuObject, squidStateObject, switchButton;
 
     [SerializeField]
-    Text switchStateButtonLabel;
+    Text switchStateButtonLabel, scoreText;
 
     private static UIController instance;
     public static UIController Instance
@@ -28,6 +28,11 @@ public class UIController : MonoBehaviour
         instructions.SetActive(!instructions.activeSelf);
     }
 
+    public void UpdateScore()
+    {
+        scoreText.text = "Score: " + GameController.Instance.Score.ToString();
+    }
+
     public void UpdateUI()
     {
         GameState state = GameController.Instance.State;
@@ -36,8 +41,10 @@ public class UIController : MonoBehaviour
             brainStateObject.SetActive(true);
             helpButton.SetActive(true);
             mainMenuObject.SetActive(false);
+            scoreText.enabled = true;
             squidStateObject.SetActive(false);
             switchButton.SetActive(true);
+
             switchStateButtonLabel.text = "Squid View";
         }
         else if (state == GameState.MainMenu)
@@ -45,6 +52,7 @@ public class UIController : MonoBehaviour
             brainStateObject.SetActive(false);
             helpButton.SetActive(false);
             mainMenuObject.SetActive(true);
+            scoreText.enabled = false;
             squidStateObject.SetActive(false);
             switchButton.SetActive(false);
         }
@@ -53,8 +61,10 @@ public class UIController : MonoBehaviour
             brainStateObject.SetActive(false);
             helpButton.SetActive(true);
             mainMenuObject.SetActive(false);
+            scoreText.enabled = true;
             squidStateObject.SetActive(true);
             switchButton.SetActive(true);
+
             switchStateButtonLabel.text = "Brain View";
         }
         

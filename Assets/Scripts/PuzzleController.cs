@@ -35,7 +35,7 @@ public class PuzzleController : MonoBehaviour
     {
         isSolved = true;
         currentPuzzle = PuzzleType.None;
-        GameController.Instance.score++;
+        GameController.Instance.Score++;
     }
 
     public void StartMatchPuzzle()
@@ -94,6 +94,7 @@ public class PuzzleController : MonoBehaviour
 
         isSolved = true;
         Debug.Log("YAY");
+        GameController.Instance.Score++;
         currentPuzzle = PuzzleType.None;
     }
 

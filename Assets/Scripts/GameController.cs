@@ -6,7 +6,7 @@ public class GameController : MonoBehaviour
     GameState state;
     int neuronLimit = 6;
     public int totalNeurons = 0;
-    public int score = 0; //ToDo: count # of nodes selected per puzzle, reward fewer.
+    int score = 0; //ToDo: count # of nodes selected per puzzle, reward fewer.
 
     public GameState State
     {
@@ -29,6 +29,16 @@ public class GameController : MonoBehaviour
     }
 
     public int NeuronLimit { get { return neuronLimit; } }
+
+    public int Score
+    {
+        get { return score; }
+        set
+        {
+            score = value;
+            UIController.Instance.UpdateScore();
+        }
+    }
 
     static GameController instance;
     public static GameController Instance
