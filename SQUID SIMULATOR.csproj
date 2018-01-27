@@ -288,6 +288,7 @@
     <Compile Include="Assets\Scripts\PuzzleController.cs" />
     <Compile Include="Assets\Scripts\Squid.cs" />
     <Compile Include="Assets\Scripts\SquidPart.cs" />
+    <Compile Include="Assets\Scripts\UIController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

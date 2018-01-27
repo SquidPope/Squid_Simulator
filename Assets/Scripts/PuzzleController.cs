@@ -7,12 +7,24 @@ public class PuzzleController : MonoBehaviour
     Squid player, goal;
 
     PuzzleType currentPuzzle = PuzzleType.Match; //ToDo: randomize on start when both types are confirmed.
+    bool isSolved = false;
+    float delay = 5f;
+    float solveTimer = 0f;
+
+    public void Solve()
+    {
+        isSolved = true;
+        GameController.Instance.score++;
+    }
 
     public void StartMatchPuzzle()
     {
         //Randomize goal colors
         for (int i = 0; i < (int)SquidPartType.Total; i++)
         {
+            SquidPartType t = (SquidPartType)i;
+            Debug.Log("looking for type: " + t);
+
             if (goal.GetPartColor((SquidPartType)i) == Color.clear)
             {
                 Debug.Log("goal doesn't contain part of type: " + (SquidPartType)i);
@@ -62,5 +74,20 @@ public class PuzzleController : MonoBehaviour
         }
 
         return true;
+    }
+
+    private void Update()
+    {
+        if  (isSolved)
+        {
+            solveTimer += Time.deltaTime;
+            if (solveTimer >= delay)
+            {
+                isSolved = false;
+
+                //ToDo: randomize type of puzzle.
+                StartMatchPuzzle();
+            }
+        }
     }
 }

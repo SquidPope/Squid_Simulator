@@ -1,23 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class InputController : MonoBehaviour
 {
     [SerializeField]
     GameObject quitDialogue;
-
-    [SerializeField]
-    Text switchStateButtonLabel;
-
+    
     Node clickedNode = null;
 
     private void Start()
     {
         quitDialogue.SetActive(false);
-        if (GameController.Instance.State == GameState.Brain)
-            switchStateButtonLabel.text = "Squid View";
-        else if (GameController.Instance.State == GameState.Squid)
-            switchStateButtonLabel.text = "Brain View";
     }
 
     void Update()
@@ -59,7 +51,7 @@ public class InputController : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.Escape))
             {
-                if (quitDialogue.active == true)
+                if (quitDialogue.activeSelf == true)
                 {
                     Application.Quit();
                 }
@@ -70,6 +62,16 @@ public class InputController : MonoBehaviour
             }
         }
 	}
+
+    public void PlayButton()
+    {
+        GameController.Instance.State = GameState.Squid;
+    }
+
+    public void QuitButton()
+    {
+        quitDialogue.SetActive(true);
+    }
 
     public void YesQuit()
     {
@@ -86,12 +88,10 @@ public class InputController : MonoBehaviour
     {
         if (GameController.Instance.State == GameState.Brain)
         {
-            switchStateButtonLabel.text = "Brain View";
             GameController.Instance.State = GameState.Squid;
         }
         else if (GameController.Instance.State == GameState.Squid)
         {
-            switchStateButtonLabel.text = "Squid View";
             GameController.Instance.State = GameState.Brain;
         }
     }

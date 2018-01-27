@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 
-public enum GameState { Brain, Squid }
+public enum GameState { Brain, MainMenu, Squid }
 public class GameController : MonoBehaviour
 {
-    [SerializeField]
-    GameObject brainStateObject, squidStateObject;
-
 
     GameState state;
     int neuronLimit = 6;
     public int totalNeurons = 0;
+    public int score = 0;
 
     public GameState State
     {
@@ -17,16 +15,7 @@ public class GameController : MonoBehaviour
         set
         {
             state = value;
-            if (state == GameState.Brain)
-            {
-                brainStateObject.SetActive(true);
-                squidStateObject.SetActive(false);
-            }
-            else if (state == GameState.Squid)
-            {
-                brainStateObject.SetActive(false);
-                squidStateObject.SetActive(true);
-            }
+            UIController.Instance.UpdateUI();
         }
     }
 
@@ -50,7 +39,7 @@ public class GameController : MonoBehaviour
     private void Start()
     {
 
-        State = GameState.Brain;
+        State = GameState.MainMenu;
     }
 
 }
