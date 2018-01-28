@@ -103,7 +103,7 @@ public class InputController : MonoBehaviour
                     clickedNode.SelectNode();
                     selectedNode = clickedNode;
                 }
-                else if (selectedNode.GetConnectedNodes().Contains(clickedNode))
+                else if (selectedNode != null && clickedNode.GetConnectedNodes().Contains(selectedNode))
                 {
                     if (!clickedNode.HasImpulse)
                     {

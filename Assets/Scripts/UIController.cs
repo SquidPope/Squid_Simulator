@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    GameObject brainStateObject, instructions, helpButton, mainMenuObject, scoreImage, squidStateObject, switchButton;
+    GameObject brainStateObject, brainInstructions, helpButton, instructionsImage, mainMenuObject, scoreImage, squidInstructions, squidStateObject, switchButton;
 
     [SerializeField]
     Text switchStateButtonLabel, scoreText, finalScoreText;
@@ -25,7 +25,18 @@ public class UIController : MonoBehaviour
 
     public void HelpButton()
     {
-        instructions.SetActive(!instructions.activeSelf);
+        instructionsImage.SetActive(!instructionsImage.activeSelf);
+
+        if (GameController.Instance.State == GameState.Brain)
+        {
+            squidInstructions.SetActive(false);
+            brainInstructions.SetActive(instructionsImage.activeSelf);
+        }  
+        else if (GameController.Instance.State == GameState.Squid)
+        {
+            brainInstructions.SetActive(false);
+            squidInstructions.SetActive(instructionsImage.activeSelf);
+        } 
     }
 
     public void UpdateScore()

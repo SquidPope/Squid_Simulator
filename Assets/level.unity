@@ -316,6 +316,7 @@ GameObject:
   - component: {fileID: 90922513}
   - component: {fileID: 90922512}
   - component: {fileID: 90922511}
+  - component: {fileID: 90922515}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -386,6 +387,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &90922515
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 90922510}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: b2d0bc41afbc39a4692d2d16df31073b, type: 2}
 --- !u!1 &103926825
 GameObject:
   m_ObjectHideFlags: 0
@@ -4515,7 +4524,7 @@ GameObject:
   - component: {fileID: 288076733}
   - component: {fileID: 288076732}
   m_Layer: 5
-  m_Name: Instructions Text
+  m_Name: BrainInstructions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4536,8 +4545,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 180, y: 500}
+  m_AnchoredPosition: {x: 0, y: -20}
+  m_SizeDelta: {x: 500, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &288076732
 MonoBehaviour:
@@ -4571,20 +4580,27 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'In Brain view, left click the top Neuron (white circle) to start.
+  m_Text: 'These are the brains of your squid. Here you can control your squid''s
+    color to talk to other squid.
 
 
-    Bright Neurons have an electric impulse, dark ones do not.
+    - Left click the start neuron (the one highlighted in blue).
 
 
-    Click a Neutron with an electric impulse
-
-    and then click an adjacent one without an electric
-
-    impulse to move the electric impulse.
+    - The yellow neuron is the one you have selected.
 
 
-    Right Click to remove an electric impulse from a Neuron.'
+    - White neurons have an electric impulse and are active.
+
+
+    - Left clicking a neuron next to your selected neuron will move the electric impulse
+    to the new neuron.
+
+
+    - Right click a neuron with an electric impulse to remove that impulse.
+
+
+    You can press Escape on your keyboard to Quit.'
 --- !u!222 &288076733
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5811,7 +5827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.60294116, g: 0.7699797, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -6347,6 +6363,96 @@ Transform:
   m_PrefabParentObject: {fileID: 4150916904171184, guid: fdd5fb227d71ab04f8f572cdc0cc9503,
     type: 2}
   m_PrefabInternal: {fileID: 1951687063}
+--- !u!1 &1132188346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1132188347}
+  - component: {fileID: 1132188349}
+  - component: {fileID: 1132188348}
+  m_Layer: 5
+  m_Name: SquidInstructions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1132188347
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1132188346}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1864714835}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -20}
+  m_SizeDelta: {x: 500, y: 550}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1132188348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1132188346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Hello, and welcome to the ocean! The squid on the bottom is your squid.
+    To communicate with other squid, your squid will need to change colors. There
+    are two types of communication:
+
+
+    - Match: Say hi to the other squid by matching its colors.
+
+
+    - Guide: Tell the other squid what kinds of fish are around it by matching the
+    fish colors with the same area of your squid.
+
+
+    Remember those colors and their order, then press the "Brain View" button to change
+    your squid''s colors.
+
+
+    You can press Escape on your keyboard to Quit.'
+--- !u!222 &1132188349
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1132188346}
 --- !u!1 &1135348166
 GameObject:
   m_ObjectHideFlags: 0
@@ -6626,10 +6732,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brainStateObject: {fileID: 166231586}
-  instructions: {fileID: 1864714834}
+  brainInstructions: {fileID: 288076730}
   helpButton: {fileID: 845544804}
+  instructionsImage: {fileID: 1864714834}
   mainMenuObject: {fileID: 1317996413}
   scoreImage: {fileID: 906236444}
+  squidInstructions: {fileID: 1132188346}
   squidStateObject: {fileID: 210911427}
   switchButton: {fileID: 480634037}
   switchStateButtonLabel: {fileID: 1998123876}
@@ -8474,13 +8582,14 @@ RectTransform:
   m_Children:
   - {fileID: 1287869510}
   - {fileID: 288076731}
+  - {fileID: 1132188347}
   m_Father: {fileID: 232119151}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120, y: -380}
-  m_SizeDelta: {x: 200, y: 600}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 60}
+  m_SizeDelta: {x: 600, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1864714836
 MonoBehaviour:
@@ -8494,7 +8603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.60294116, g: 0.7699797, b: 1, a: 0.8039216}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
