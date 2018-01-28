@@ -9,18 +9,18 @@ public class Node : MonoBehaviour
     List<Node> connectedNodes;
 
     public int id;
-    public bool canTurnOn;
+    public bool isStart;
 
-    private bool hasNeuron;
+    private bool hasImpulse;
     Renderer rend;
 
-    public bool HasNeuron
+    public bool HasImpulse
     {
-        get { return hasNeuron; }
+        get { return hasImpulse; }
         set
         {
-            hasNeuron = value;
-            if (hasNeuron)
+            hasImpulse = value;
+            if (hasImpulse)
             {
                 rend.material.color = Color.white;
             }
@@ -34,7 +34,7 @@ public class Node : MonoBehaviour
     private void Awake()
     {
         rend = gameObject.GetComponent<Renderer>();
-        HasNeuron = false;
+        HasImpulse = false;
 
         Regex regex = new Regex("[0-9]+");
         Match match = regex.Match(gameObject.name);
@@ -48,7 +48,7 @@ public class Node : MonoBehaviour
 
     public void DeselectNode()
     {
-        if (hasNeuron)
+        if (hasImpulse)
             rend.material.color = Color.white;
         else
             rend.material.color = Color.grey;

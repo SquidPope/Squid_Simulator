@@ -12,93 +12,7 @@ public class InputController : MonoBehaviour
     {
         quitDialogue.SetActive(false);
     }
-
-    void Update()
-    {
-		if (GameController.Instance.State == GameState.Brain)
-        {
-
-            //Click the start node to turn it on and select it.
-            //Click other nodes that are next to the currently selected node to move the electron.
-            //OR click other nodes that are on to select them instead.
-            //Switching electrons gets priority over creating new ones at the start node.
-            #region Mouse State
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (selectedNode != null)
-                {
-                    Node current = GetNodeUnderMouse();
-                    if (current == null)
-                        return;
-
-                    if (current.IsConnectedToNode(selectedNode))
-                    {
-                        //if the new node already has a neuron, just select it instead (don't remove neuron) because we aren't "switching".
-                        if (!current.HasNeuron)
-                        {
-                            selectedNode.HasNeuron = false;
-                            current.HasNeuron = true;
-                        }
-
-                        selectedNode.DeselectNode();
-                        selectedNode = current;
-                        current.SelectNode();
-                    }
-                    else if (current.HasNeuron || current.canTurnOn)
-                    {
-                        selectedNode.DeselectNode();
-                        selectedNode = current;
-                        selectedNode.HasNeuron = true;
-                        selectedNode.SelectNode();
-                    }
-                }
-                else
-                {
-                    Node current = GetNodeUnderMouse();
-                    if (current != null && (current.HasNeuron || current.canTurnOn))
-                    {
-                        selectedNode = current;
-                        selectedNode.HasNeuron = true;
-                        selectedNode.SelectNode();
-                    }
-                }
-            }
-            else if (Input.GetMouseButtonUp(1))
-            {
-                Node current = GetNodeUnderMouse();
-                if (current != null)
-                {
-                    current.HasNeuron = false;
-
-                    if (selectedNode == current)
-                        selectedNode = null;
-                } 
-            }
-            #endregion
-        }
-        else
-        {
-            //Deselect the node because having it already selected could throw players off.
-            if (selectedNode != null)
-            {
-                selectedNode.DeselectNode();
-                selectedNode = null;
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            if (quitDialogue.activeSelf == true)
-            {
-                Application.Quit();
-            }
-            else
-            {
-                quitDialogue.SetActive(true);
-            }
-        }
-    }
-
+    
     public void PlayButton()
     {
         GameController.Instance.State = GameState.Squid;
@@ -159,5 +73,22 @@ public class InputController : MonoBehaviour
         }
 
         return n;
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+
+        }
+
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            quitDialogue.SetActive(true);
+        }
     }
 }
