@@ -77,13 +77,61 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0))
-        {
+        Node clickedNode = GetNodeUnderMouse(); //The node we clicked this frame.
 
-        }
-        else if (Input.GetMouseButtonUp(1))
+        if (clickedNode != null)
         {
+            if (Input.GetMouseButtonUp(0))
+            {
+                //if clickedNode is start
+                //select clickedNode, clickedNode.HasImpulse = true
 
+                //if selectedNode == null
+                
+                //if selectedNode is null
+                //??
+                //if it is connected to selectedNode
+                //are they both on?
+                //no - swap yes - select clickedNode and deselect selectedNode
+
+                if (clickedNode.isStart)
+                {
+                    if (selectedNode != null)
+                        selectedNode.DeselectNode();
+
+                    clickedNode.HasImpulse = true;
+                    clickedNode.SelectNode();
+                    selectedNode = clickedNode;
+                }
+                else if (selectedNode.GetConnectedNodes().Contains(clickedNode))
+                {
+                    if (!clickedNode.HasImpulse)
+                    {
+                        selectedNode.HasImpulse = false;
+                        clickedNode.HasImpulse = true;
+                    }
+
+                    selectedNode.DeselectNode();
+                    clickedNode.SelectNode();
+                    selectedNode = clickedNode;
+                }
+                else if (clickedNode.HasImpulse)
+                {
+                    selectedNode.DeselectNode();
+                    clickedNode.SelectNode();
+                    selectedNode = clickedNode;
+                }
+            }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                clickedNode.HasImpulse = false;
+
+                if (clickedNode == selectedNode)
+                {
+                    clickedNode.DeselectNode();
+                    selectedNode = null;
+                }
+            }
         }
 
         if (Input.GetKeyUp(KeyCode.Escape))
