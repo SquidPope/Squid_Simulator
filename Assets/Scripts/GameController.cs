@@ -4,7 +4,7 @@ public enum GameState { Brain, GameOver, MainMenu, Squid }
 public class GameController : MonoBehaviour
 {
     GameState state;
-    int neuronLimit = 6;
+    int neuronLimit = 9;
     public int totalNeurons = 0;
     public int score = 0; //ToDo: count # of nodes selected per puzzle, reward fewer.
 
