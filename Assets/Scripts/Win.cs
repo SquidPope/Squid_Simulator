@@ -33,7 +33,7 @@ public class Win : MonoBehaviour
 
     private Color RandomColor()
     {
-        int rand = Random.Range(0, 6);
+        int rand = Random.Range(0, 7);
         if (rand == 0)
             return Color.red;
         else if (rand == 1)

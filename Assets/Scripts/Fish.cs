@@ -59,7 +59,7 @@ public class Fish : MonoBehaviour
 
     public void Randomize()
     {
-        int rand = Random.Range(0, 10);
+        int rand = Random.Range(0, 11);
         if (rand <= 5)
             Type = FishType.Tasty;
         else if (rand < 10)

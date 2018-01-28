@@ -124,7 +124,7 @@ public class PuzzleController : MonoBehaviour
                 Debug.Log("goal doesn't contain part of type: " + (SquidPartType)i);
                 continue;
             }
-            int rand = Random.Range(0, 7);
+            int rand = Random.Range(0, 8);
 
             switch (rand)
             {
@@ -258,7 +258,7 @@ public class PuzzleController : MonoBehaviour
 
     public void StartPuzzle()
     {
-        int rand = Random.Range(0, 1);
+        int rand = Random.Range(0, 2);
         if (rand == 0)
             StartHelpPuzzle();
         else
@@ -280,7 +280,7 @@ public class PuzzleController : MonoBehaviour
                 solveTimer = 0;
 
                 //ToDo: randomize type of puzzle.
-                int rand = Random.Range(0, 1);
+                int rand = Random.Range(0, 2);
 
                 if (rand == 0)
                     StartMatchPuzzle();
