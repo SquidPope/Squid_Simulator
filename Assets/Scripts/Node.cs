@@ -46,6 +46,14 @@ public class Node : MonoBehaviour
         rend.material.color = Color.yellow;
     }
 
+    public void DeselectNode()
+    {
+        if (hasNeuron)
+            rend.material.color = Color.white;
+        else
+            rend.material.color = Color.grey;
+    }
+
     public List<Node> GetConnectedNodes()
     {
         return connectedNodes;

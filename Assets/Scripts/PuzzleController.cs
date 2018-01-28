@@ -7,7 +7,7 @@ public class PuzzleController : MonoBehaviour
     Squid player, goal;
 
     [SerializeField]
-    GameObject win, lose, gameOverText;
+    GameObject win, lose, gameOverText, gameWinText;
 
     [SerializeField]
     Prompt prompt;
@@ -17,6 +17,10 @@ public class PuzzleController : MonoBehaviour
     bool isSolved = false;
     float delay = 5f;
     float solveTimer = 0f;
+
+    int totalPuzzles = 0;
+    int puzzlesToWin = 7;
+    bool hasWon = false;
 
     int gameOver = -5;
     bool hasLost = false;
@@ -52,6 +56,7 @@ public class PuzzleController : MonoBehaviour
         win.SetActive(false);
         lose.SetActive(false);
         gameOverText.SetActive(false);
+        gameWinText.SetActive(false);
     }
 
     public bool GetIsSolved()
@@ -64,6 +69,15 @@ public class PuzzleController : MonoBehaviour
         isSolved = true;
         Debug.Log("YAY");
         win.SetActive(true);
+
+        totalPuzzles++;
+        if (totalPuzzles >= puzzlesToWin)
+        {
+            gameWinText.SetActive(true);
+            goal.gameObject.SetActive(false);
+            hasWon = true;
+            GameController.Instance.State = GameState.GameOver;
+        }
     }
 
     public void Fail()
@@ -75,6 +89,16 @@ public class PuzzleController : MonoBehaviour
             goal.gameObject.SetActive(false);
             Camera.main.backgroundColor = Color.black;
             hasLost = true;
+            GameController.Instance.State = GameState.GameOver;
+        }
+
+        totalPuzzles++;
+        if (totalPuzzles >= puzzlesToWin)
+        {
+            gameWinText.SetActive(true);
+            goal.gameObject.SetActive(false);
+            hasWon = true;
+            GameController.Instance.State = GameState.GameOver;
         }
 
         isSolved = true;
@@ -89,7 +113,7 @@ public class PuzzleController : MonoBehaviour
 
     public void StartMatchPuzzle()
     {
-        if (isSolved || hasLost)
+        if (isSolved || hasLost || hasWon)
             return;
 
         //Randomize goal colors
@@ -141,7 +165,7 @@ public class PuzzleController : MonoBehaviour
 
     public void StartHelpPuzzle()
     {
-        if (isSolved || hasLost)
+        if (isSolved || hasLost || hasWon)
             return;
 
         currentPuzzle = PuzzleType.Help;
@@ -184,6 +208,12 @@ public class PuzzleController : MonoBehaviour
     {
         bool isRight = true;
         int puzzleScore = 0;
+
+        //Color the goal squid so players can see what the correct solution was.
+        goal.SetPartColor(SquidPartType.Top, topFish.correctColor);
+        goal.SetPartColor(SquidPartType.Left, leftFish.correctColor);
+        goal.SetPartColor(SquidPartType.Right, rightFish.correctColor);
+
         //check each player part against correct answer.
         if (player.GetPartColor(SquidPartType.Top) == topFish.correctColor)
         {

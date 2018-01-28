@@ -7,7 +7,7 @@ public class UIController : MonoBehaviour
     GameObject brainStateObject, instructions, helpButton, mainMenuObject, scoreImage, squidStateObject, switchButton;
 
     [SerializeField]
-    Text switchStateButtonLabel, scoreText;
+    Text switchStateButtonLabel, scoreText, finalScoreText;
 
     private static UIController instance;
     public static UIController Instance
@@ -70,9 +70,14 @@ public class UIController : MonoBehaviour
             scoreText.enabled = true;
             squidStateObject.SetActive(true);
             switchButton.SetActive(true);
-            //PuzzleController.Instance.ShowHideFishies(true);
 
             switchStateButtonLabel.text = "Brain View";
+        }
+        else if (state == GameState.GameOver)
+        {
+            switchButton.SetActive(false);
+            finalScoreText.text = "Final Score: " + GameController.Instance.Score;
+
         }
         
     }

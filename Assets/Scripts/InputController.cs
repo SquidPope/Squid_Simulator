@@ -62,6 +62,15 @@ public class InputController : MonoBehaviour
             }
             #endregion
         }
+        else
+        {
+            //Deselect the node because having it already selected could throw players off.
+            if (clickedNode != null)
+            {
+                clickedNode.DeselectNode();
+                clickedNode = null;
+            }
+        }
 
         if (Input.GetKeyUp(KeyCode.Escape))
         {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum GameState { Brain, MainMenu, Squid }
+public enum GameState { Brain, GameOver, MainMenu, Squid }
 public class GameController : MonoBehaviour
 {
     GameState state;
