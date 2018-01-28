@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class Node : MonoBehaviour
@@ -9,6 +11,7 @@ public class Node : MonoBehaviour
     [SerializeField]
     GameObject linePrefab;
 
+    public int id;
     public bool canTurnOn;
 
     private bool hasNeuron;
@@ -36,11 +39,20 @@ public class Node : MonoBehaviour
         rend.material.color = Color.yellow;
     }
 
+    public List<Node> GetConnectedNodes()
+    {
+        return connectedNodes;
+    }
+
     private void Start()
     {
         rend = gameObject.GetComponent<Renderer>();
         HasNeuron = false;
 
+        Regex regex = new Regex("[0-9]+");
+        Match match = regex.Match(gameObject.name);
+        Int32.TryParse(match.Value, out id);
+        
         //ToDo: remove duplicate lines (there's a lot of them)
         foreach (Node n in connectedNodes)
         {

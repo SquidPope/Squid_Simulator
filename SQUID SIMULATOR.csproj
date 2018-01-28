@@ -285,6 +285,7 @@
     <Compile Include="Assets\Scripts\Fish.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\InputController.cs" />
+    <Compile Include="Assets\Scripts\LineManager.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\Prompt.cs" />
     <Compile Include="Assets\Scripts\PuzzleController.cs" />
