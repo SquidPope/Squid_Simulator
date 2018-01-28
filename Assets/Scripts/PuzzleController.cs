@@ -67,7 +67,6 @@ public class PuzzleController : MonoBehaviour
     public void Solve()
     {
         isSolved = true;
-        Debug.Log("YAY");
         win.SetActive(true);
 
         totalPuzzles++;
@@ -102,7 +101,6 @@ public class PuzzleController : MonoBehaviour
         }
 
         isSolved = true;
-        Debug.Log("noes");
         lose.SetActive(true);
     }
 
@@ -245,7 +243,6 @@ public class PuzzleController : MonoBehaviour
             isRight = false;
         }
 
-        Debug.Log("Score: " + puzzleScore);
         GameController.Instance.Score += puzzleScore;
 
         //if there is a timer, and it runs out, penalty of ?? points here?

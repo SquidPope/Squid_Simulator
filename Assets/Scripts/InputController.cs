@@ -6,7 +6,7 @@ public class InputController : MonoBehaviour
     [SerializeField]
     GameObject quitDialogue;
     
-    Node clickedNode = null;
+    Node selectedNode = null;
 
     private void Start()
     {
@@ -17,25 +17,34 @@ public class InputController : MonoBehaviour
     {
 		if (GameController.Instance.State == GameState.Brain)
         {
-            //ToDo: start some nodes on, or just left click to turn on?
 
-            //ToDo: clickedNode should be a different color so the player knows what is selected.
+            //Click the start node to turn it on and select it.
+            //Click other nodes that are next to the currently selected node to move the electron.
+            //OR click other nodes that are on to select them instead.
+            //Switching electrons gets priority over creating new ones at the start node.
             #region Mouse State
             if (Input.GetMouseButtonDown(0))
             {
-                if (clickedNode != null)
+                if (selectedNode != null)
                 {
                     Node current = GetNodeUnderMouse();
                     if (current == null)
                         return;
 
-                    //check if the nodes are connected
-                    if (current.IsConnectedToNode(clickedNode))
+                    if (current.IsConnectedToNode(selectedNode))
                     {
-                        clickedNode.HasNeuron = false;
+                        selectedNode.HasNeuron = false;
                         current.HasNeuron = true;
 
-                        clickedNode = null;
+                        selectedNode.DeselectNode();
+                        selectedNode = current;
+                        current.SelectNode();
+                    }
+                    else if (current.HasNeuron || current.canTurnOn)
+                    {
+                        selectedNode.DeselectNode();
+                        selectedNode = current;
+                        current.SelectNode();
                     }
                 }
                 else
@@ -43,9 +52,9 @@ public class InputController : MonoBehaviour
                     Node current = GetNodeUnderMouse();
                     if (current != null && (current.HasNeuron || current.canTurnOn))
                     {
-                        clickedNode = current;
-                        clickedNode.HasNeuron = true;
-                        clickedNode.SelectNode();
+                        selectedNode = current;
+                        selectedNode.HasNeuron = true;
+                        selectedNode.SelectNode();
                     }
                 }
             }
@@ -56,8 +65,8 @@ public class InputController : MonoBehaviour
                 {
                     current.HasNeuron = false;
 
-                    if (clickedNode == current)
-                        clickedNode = null;
+                    if (selectedNode == current)
+                        selectedNode = null;
                 } 
             }
             #endregion
@@ -65,10 +74,10 @@ public class InputController : MonoBehaviour
         else
         {
             //Deselect the node because having it already selected could throw players off.
-            if (clickedNode != null)
+            if (selectedNode != null)
             {
-                clickedNode.DeselectNode();
-                clickedNode = null;
+                selectedNode.DeselectNode();
+                selectedNode = null;
             }
         }
 
