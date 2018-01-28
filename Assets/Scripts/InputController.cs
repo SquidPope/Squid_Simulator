@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InputController : MonoBehaviour
 {
@@ -78,6 +79,7 @@ public class InputController : MonoBehaviour
     public void PlayButton()
     {
         GameController.Instance.State = GameState.Squid;
+        PuzzleController.Instance.StartPuzzle();
     }
 
     public void QuitButton()
@@ -96,8 +98,18 @@ public class InputController : MonoBehaviour
         quitDialogue.SetActive(false);
     }
 
+    public void Reset()
+    {
+        //Just reload the whole dumb thing.
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void SwitchState()
     {
+        //Prevent the player from switching before the next puzzle has started.
+        if (PuzzleController.Instance.GetIsSolved())
+            return;
+
         if (GameController.Instance.State == GameState.Brain)
         {
             GameController.Instance.State = GameState.Squid;

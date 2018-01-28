@@ -16,16 +16,7 @@ public class GameController : MonoBehaviour
             state = value;
             UIController.Instance.UpdateUI();
 
-            if (state == GameState.Squid && PuzzleController.Instance.GetCurrentPuzzleType() == PuzzleType.None)
-            {
-                //ToDo: randomize
-                int rand = Random.Range(0, 1);
-                if (rand == 0)
-                    PuzzleController.Instance.StartHelpPuzzle();
-                else
-                    PuzzleController.Instance.StartMatchPuzzle();
-            }
-            else if (state == GameState.Squid && PuzzleController.Instance.GetCurrentPuzzleType() == PuzzleType.Match)
+            if (state == GameState.Squid && PuzzleController.Instance.GetCurrentPuzzleType() == PuzzleType.Match)
             {
                 PuzzleController.Instance.CheckForMatch();
             }

@@ -7,7 +7,7 @@ public class PuzzleController : MonoBehaviour
     Squid player, goal;
 
     [SerializeField]
-    GameObject win, lose;
+    GameObject win, lose, gameOverText;
 
     [SerializeField]
     Prompt prompt;
@@ -15,11 +15,11 @@ public class PuzzleController : MonoBehaviour
 
     PuzzleType currentPuzzle = PuzzleType.None;
     bool isSolved = false;
-    float delay = 7f;
+    float delay = 5f;
     float solveTimer = 0f;
 
-    int fails = 0;
-    int gameOver = 5;
+    int gameOver = -5;
+    bool hasLost = false;
 
     [SerializeField]
     GameObject fishies;
@@ -51,6 +51,12 @@ public class PuzzleController : MonoBehaviour
     {
         win.SetActive(false);
         lose.SetActive(false);
+        gameOverText.SetActive(false);
+    }
+
+    public bool GetIsSolved()
+    {
+        return isSolved;
     }
 
     public void Solve()
@@ -58,22 +64,22 @@ public class PuzzleController : MonoBehaviour
         isSolved = true;
         Debug.Log("YAY");
         win.SetActive(true);
-        //GameController.Instance.Score++;
-        //currentPuzzle = PuzzleType.None;
     }
 
     public void Fail()
     {
-        fails++;
-        if (fails >= gameOver)
+        if (GameController.Instance.Score <= gameOver)
         {
             //Display game over, reset button
+            gameOverText.SetActive(true);
+            goal.gameObject.SetActive(false);
+            Camera.main.backgroundColor = Color.black;
+            hasLost = true;
         }
 
         isSolved = true;
         Debug.Log("noes");
         lose.SetActive(true);
-        //currentPuzzle = PuzzleType.None;
     }
 
     public void ShowHideFishies(bool isOn)
@@ -83,7 +89,7 @@ public class PuzzleController : MonoBehaviour
 
     public void StartMatchPuzzle()
     {
-        if (isSolved)
+        if (isSolved || hasLost)
             return;
 
         //Randomize goal colors
@@ -135,10 +141,13 @@ public class PuzzleController : MonoBehaviour
 
     public void StartHelpPuzzle()
     {
-        if (isSolved)
+        if (isSolved || hasLost)
             return;
 
         currentPuzzle = PuzzleType.Help;
+        goal.SetPartColor(SquidPartType.Left, Color.white);
+        goal.SetPartColor(SquidPartType.Right, Color.white);
+        goal.SetPartColor(SquidPartType.Top, Color.white);
 
         for (int i = 0; i < (int)SquidPartType.Total; i++)
         {
@@ -161,13 +170,13 @@ public class PuzzleController : MonoBehaviour
         {
             if (player.GetPartColor((SquidPartType)i) != goal.GetPartColor((SquidPartType)i))
             {
-                GameController.Instance.Score--;
+                GameController.Instance.Score -= 2;
                 Fail();
                 return;
             }  
         }
-        Debug.Log("Match: Score + 1");
-        GameController.Instance.Score++;
+
+        GameController.Instance.Score += 2;
         Solve();
     }
 
@@ -218,6 +227,15 @@ public class PuzzleController : MonoBehaviour
             Fail();
 
         fishies.SetActive(false);
+    }
+
+    public void StartPuzzle()
+    {
+        int rand = Random.Range(0, 1);
+        if (rand == 0)
+            StartHelpPuzzle();
+        else
+            StartMatchPuzzle();
     }
 
     private void Update()

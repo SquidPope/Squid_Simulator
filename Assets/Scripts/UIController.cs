@@ -48,7 +48,7 @@ public class UIController : MonoBehaviour
             switchButton.SetActive(true);
             PuzzleController.Instance.ShowHideFishies(false);
 
-            switchStateButtonLabel.text = "Squid View";
+            switchStateButtonLabel.text = "Solve this Squid!";
         }
         else if (state == GameState.MainMenu)
         {
