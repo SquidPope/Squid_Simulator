@@ -24,6 +24,10 @@ public class Squid : MonoBehaviour
 
     public void SetPartColor(SquidPartType type, Color c)
     {
+        //Make the Squid look pretty for the main menu.
+        if (GameController.Instance.State == GameState.MainMenu)
+            c = Color.white;
+
         SquidPart part = parts.Find(x => x.GetSquidPartType() == type);
         part.PartColor = c;
     }

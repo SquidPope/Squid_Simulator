@@ -78,7 +78,7 @@ public class PuzzleController : MonoBehaviour
             switch (rand)
             {
                 case 0:
-                    goal.SetPartColor((SquidPartType)i, Color.black);
+                    goal.SetPartColor((SquidPartType)i, Color.grey);
                     break;
                 case 1:
                     goal.SetPartColor((SquidPartType)i, Color.blue);

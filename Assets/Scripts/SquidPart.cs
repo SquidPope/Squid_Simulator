@@ -39,7 +39,7 @@ public class SquidPart : MonoBehaviour {
     {
         if (r != null && g != null && b != null)
         {
-            Color c = Color.black;
+            Color c = Color.grey;
            
             //if r && g && b = white
             //if r && b = magenta
@@ -83,6 +83,10 @@ public class SquidPart : MonoBehaviour {
             {
                 c = Color.white;
             }
+
+            //Make the squid look pretty for the main menu.
+            if (GameController.Instance.State == GameState.MainMenu)
+                c = Color.white;
 
             PartColor = c;
         }

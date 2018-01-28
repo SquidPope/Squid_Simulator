@@ -21,8 +21,6 @@ public class LineManager : MonoBehaviour
             nodes.Add(nodeArray[i].GetComponent<Node>());
         }
 
-        Debug.Log("there are " + nodes.Count + (" nodes."));
-
         foreach (Node n in nodes)
         {
             if (n == null)
@@ -37,6 +35,7 @@ public class LineManager : MonoBehaviour
                 LineRenderer line = Instantiate(linePrefab).GetComponent<LineRenderer>();
                 line.SetPosition(0, c.transform.position);
                 line.SetPosition(1, n.transform.position);
+                line.transform.parent = transform;
 
                 KeyValuePair<int, int> keyValue = new KeyValuePair<int, int>(c.id, n.id);
                 nodeConnections.Add(keyValue);
