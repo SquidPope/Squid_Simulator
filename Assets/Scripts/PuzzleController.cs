@@ -9,6 +9,9 @@ public class PuzzleController : MonoBehaviour
     [SerializeField]
     GameObject win;
 
+    [SerializeField]
+    Prompt prompt;
+
 
     PuzzleType currentPuzzle = PuzzleType.None;
     bool isSolved = false;
@@ -101,6 +104,9 @@ public class PuzzleController : MonoBehaviour
             }
 
             currentPuzzle = PuzzleType.Match;
+
+            prompt.gameObject.SetActive(true);
+            prompt.Show();
         }
     }
 
@@ -121,6 +127,9 @@ public class PuzzleController : MonoBehaviour
         topFish.Randomize();
         leftFish.Randomize();
         rightFish.Randomize();
+
+        prompt.gameObject.SetActive(true);
+        prompt.Show();
 
         //Get correct red/green/blue value for top, left, and right
         //Start a timer?
@@ -172,8 +181,7 @@ public class PuzzleController : MonoBehaviour
         //if the player goes below a certain point value, game over?
 
         Solve();
-
-        
+        fishies.SetActive(false);
     }
 
     private void Update()
@@ -187,8 +195,12 @@ public class PuzzleController : MonoBehaviour
                 win.SetActive(false);
 
                 //ToDo: randomize type of puzzle.
-                //StartMatchPuzzle();
-                StartHelpPuzzle();
+                int rand = Random.Range(0, 1);
+
+                if (rand == 0)
+                    StartMatchPuzzle();
+                else
+                    StartHelpPuzzle();
             }
         }
     }

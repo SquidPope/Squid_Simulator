@@ -286,6 +286,7 @@
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\InputController.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
+    <Compile Include="Assets\Scripts\Prompt.cs" />
     <Compile Include="Assets\Scripts\PuzzleController.cs" />
     <Compile Include="Assets\Scripts\Squid.cs" />
     <Compile Include="Assets\Scripts\SquidPart.cs" />
