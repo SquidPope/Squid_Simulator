@@ -6,7 +6,7 @@ public class GameController : MonoBehaviour
     GameState state;
     int neuronLimit = 6;
     public int totalNeurons = 0;
-    int score = 0; //ToDo: count # of nodes selected per puzzle, reward fewer.
+    public int score = 0; //ToDo: count # of nodes selected per puzzle, reward fewer.
 
     public GameState State
     {

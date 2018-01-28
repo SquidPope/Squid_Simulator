@@ -40,14 +40,6 @@ public class SquidPart : MonoBehaviour {
         if (r != null && g != null && b != null)
         {
             Color c = Color.grey;
-           
-            //if r && g && b = white
-            //if r && b = magenta
-            //if r && g = yellow
-            //if b && g = cyan
-            //if r = red
-            //if g = green
-            //if b = blue
 
             if (r.HasNeuron)
             {

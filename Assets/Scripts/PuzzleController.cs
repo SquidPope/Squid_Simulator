@@ -7,7 +7,7 @@ public class PuzzleController : MonoBehaviour
     Squid player, goal;
 
     [SerializeField]
-    GameObject win;
+    GameObject win, lose;
 
     [SerializeField]
     Prompt prompt;
@@ -15,8 +15,11 @@ public class PuzzleController : MonoBehaviour
 
     PuzzleType currentPuzzle = PuzzleType.None;
     bool isSolved = false;
-    float delay = 5f;
+    float delay = 7f;
     float solveTimer = 0f;
+
+    int fails = 0;
+    int gameOver = 5;
 
     [SerializeField]
     GameObject fishies;
@@ -47,6 +50,7 @@ public class PuzzleController : MonoBehaviour
     public void Start()
     {
         win.SetActive(false);
+        lose.SetActive(false);
     }
 
     public void Solve()
@@ -54,8 +58,27 @@ public class PuzzleController : MonoBehaviour
         isSolved = true;
         Debug.Log("YAY");
         win.SetActive(true);
-        GameController.Instance.Score++;
-        currentPuzzle = PuzzleType.None;
+        //GameController.Instance.Score++;
+        //currentPuzzle = PuzzleType.None;
+    }
+
+    public void Fail()
+    {
+        fails++;
+        if (fails >= gameOver)
+        {
+            //Display game over, reset button
+        }
+
+        isSolved = true;
+        Debug.Log("noes");
+        lose.SetActive(true);
+        //currentPuzzle = PuzzleType.None;
+    }
+
+    public void ShowHideFishies(bool isOn)
+    {
+        fishies.SetActive(isOn);
     }
 
     public void StartMatchPuzzle()
@@ -130,9 +153,6 @@ public class PuzzleController : MonoBehaviour
 
         prompt.gameObject.SetActive(true);
         prompt.Show();
-
-        //Get correct red/green/blue value for top, left, and right
-        //Start a timer?
     }
 
     public void CheckForMatch()
@@ -140,47 +160,63 @@ public class PuzzleController : MonoBehaviour
         for (int i = 0; i < (int)SquidPartType.Total; i++)
         {
             if (player.GetPartColor((SquidPartType)i) != goal.GetPartColor((SquidPartType)i))
+            {
+                GameController.Instance.Score--;
+                Fail();
                 return;
+            }  
         }
-
+        Debug.Log("Match: Score + 1");
+        GameController.Instance.Score++;
         Solve();
-        
     }
 
     public void CheckHelp()
     {
+        bool isRight = true;
+        int puzzleScore = 0;
         //check each player part against correct answer.
         if (player.GetPartColor(SquidPartType.Top) == topFish.correctColor)
         {
-            GameController.Instance.Score += topFish.correctValue;
+            puzzleScore += topFish.correctValue;
         }
         else
         {
-            GameController.Instance.Score += topFish.wrongValue;
+            puzzleScore += topFish.wrongValue;
+            isRight = false;
         }
 
         if (player.GetPartColor(SquidPartType.Left) == leftFish.correctColor)
         {
-            GameController.Instance.Score += leftFish.correctValue;
+            puzzleScore += leftFish.correctValue;
         }
         else
         {
-            GameController.Instance.Score += leftFish.wrongValue;
+            puzzleScore += leftFish.wrongValue;
+            isRight = false;
         }
 
         if (player.GetPartColor(SquidPartType.Right) == rightFish.correctColor)
         {
-            GameController.Instance.Score += rightFish.correctValue;
+            puzzleScore += rightFish.correctValue;
         }
         else
         {
-            GameController.Instance.Score += rightFish.wrongValue;
+            puzzleScore += rightFish.wrongValue;
+            isRight = false;
         }
+
+        Debug.Log("Score: " + puzzleScore);
+        GameController.Instance.Score += puzzleScore;
 
         //if there is a timer, and it runs out, penalty of ?? points here?
         //if the player goes below a certain point value, game over?
 
-        Solve();
+        if (isRight)
+            Solve();
+        else
+            Fail();
+
         fishies.SetActive(false);
     }
 
@@ -193,6 +229,10 @@ public class PuzzleController : MonoBehaviour
             {
                 isSolved = false;
                 win.SetActive(false);
+                lose.SetActive(false);
+                currentPuzzle = PuzzleType.None;
+
+                solveTimer = 0;
 
                 //ToDo: randomize type of puzzle.
                 int rand = Random.Range(0, 1);

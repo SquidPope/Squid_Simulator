@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public enum FishType { Shark, Tasty, Turtle, Total }
+[RequireComponent(typeof(SpriteRenderer))]
 public class Fish : MonoBehaviour
 {
     [SerializeField]
@@ -19,7 +20,11 @@ public class Fish : MonoBehaviour
         get { return type; }
         set
         {
-            correctColor = Color.black;
+            if (rend == null)
+            {
+                rend = gameObject.GetComponent<SpriteRenderer>();
+            }
+            correctColor = Color.grey;
             type = value;
             if (type == FishType.Shark)
             {
@@ -42,7 +47,7 @@ public class Fish : MonoBehaviour
                 rend.material.color = Color.blue;
                 correctColor = Color.blue;
                 correctValue = 5;
-                wrongValue = -1;
+                wrongValue = -2;
             }
         }
     }

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     [SerializeField]
-    GameObject brainStateObject, instructions, helpButton, mainMenuObject, squidStateObject, switchButton;
+    GameObject brainStateObject, instructions, helpButton, mainMenuObject, scoreImage, squidStateObject, switchButton;
 
     [SerializeField]
     Text switchStateButtonLabel, scoreText;
@@ -42,9 +42,11 @@ public class UIController : MonoBehaviour
             
             helpButton.SetActive(true);
             mainMenuObject.SetActive(false);
+            scoreImage.SetActive(true);
             scoreText.enabled = true;
             squidStateObject.SetActive(false);
             switchButton.SetActive(true);
+            PuzzleController.Instance.ShowHideFishies(false);
 
             switchStateButtonLabel.text = "Squid View";
         }
@@ -53,18 +55,22 @@ public class UIController : MonoBehaviour
             brainStateObject.SetActive(false);
             helpButton.SetActive(false);
             mainMenuObject.SetActive(true);
+            scoreImage.SetActive(false);
             scoreText.enabled = false;
             squidStateObject.SetActive(false);
             switchButton.SetActive(false);
+            PuzzleController.Instance.ShowHideFishies(false);
         }
         else if (state == GameState.Squid)
         {
             brainStateObject.SetActive(false);
             helpButton.SetActive(true);
             mainMenuObject.SetActive(false);
+            scoreImage.SetActive(true);
             scoreText.enabled = true;
             squidStateObject.SetActive(true);
             switchButton.SetActive(true);
+            //PuzzleController.Instance.ShowHideFishies(true);
 
             switchStateButtonLabel.text = "Brain View";
         }
