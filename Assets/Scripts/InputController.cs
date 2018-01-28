@@ -33,8 +33,12 @@ public class InputController : MonoBehaviour
 
                     if (current.IsConnectedToNode(selectedNode))
                     {
-                        selectedNode.HasNeuron = false;
-                        current.HasNeuron = true;
+                        //if the new node already has a neuron, just select it instead (don't remove neuron) because we aren't "switching".
+                        if (!current.HasNeuron)
+                        {
+                            selectedNode.HasNeuron = false;
+                            current.HasNeuron = true;
+                        }
 
                         selectedNode.DeselectNode();
                         selectedNode = current;
@@ -44,7 +48,8 @@ public class InputController : MonoBehaviour
                     {
                         selectedNode.DeselectNode();
                         selectedNode = current;
-                        current.SelectNode();
+                        selectedNode.HasNeuron = true;
+                        selectedNode.SelectNode();
                     }
                 }
                 else
