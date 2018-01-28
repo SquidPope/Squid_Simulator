@@ -4831,6 +4831,21 @@ Prefab:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 212214139127926824, guid: fdd5fb227d71ab04f8f572cdc0cc9503,
+        type: 2}
+      propertyPath: m_SortingLayerID
+      value: -1051477873
+      objectReference: {fileID: 0}
+    - target: {fileID: 212214139127926824, guid: fdd5fb227d71ab04f8f572cdc0cc9503,
+        type: 2}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212214139127926824, guid: fdd5fb227d71ab04f8f572cdc0cc9503,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114419438196314612, guid: fdd5fb227d71ab04f8f572cdc0cc9503, type: 2}
     - {fileID: 58521319203508314, guid: fdd5fb227d71ab04f8f572cdc0cc9503, type: 2}
@@ -5838,7 +5853,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4150916904171184, guid: fdd5fb227d71ab04f8f572cdc0cc9503, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.01930628
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4150916904171184, guid: fdd5fb227d71ab04f8f572cdc0cc9503, type: 2}
       propertyPath: m_LocalRotation.x
@@ -5860,6 +5875,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1322639476961570, guid: fdd5fb227d71ab04f8f572cdc0cc9503, type: 2}
+      propertyPath: m_Name
+      value: Node (0)
+      objectReference: {fileID: 0}
     - target: {fileID: 114419438196314612, guid: fdd5fb227d71ab04f8f572cdc0cc9503,
         type: 2}
       propertyPath: connectedNodes.Array.data[0]
@@ -5870,14 +5889,6 @@ Prefab:
       propertyPath: connectedNodes.Array.data[1]
       value: 
       objectReference: {fileID: 44750851}
-    - target: {fileID: 1322639476961570, guid: fdd5fb227d71ab04f8f572cdc0cc9503, type: 2}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322639476961570, guid: fdd5fb227d71ab04f8f572cdc0cc9503, type: 2}
-      propertyPath: m_Name
-      value: Node (0)
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fdd5fb227d71ab04f8f572cdc0cc9503, type: 2}
   m_IsPrefabParent: 0

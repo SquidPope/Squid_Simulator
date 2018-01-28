@@ -71,7 +71,6 @@ MonoBehaviour:
   connectedNodes:
   - {fileID: 0}
   - {fileID: 0}
-  linePrefab: {fileID: 1788533076924964, guid: a138b4f2e8d5a324ba4d0087838f9d59, type: 2}
   id: 0
   canTurnOn: 0
 --- !u!212 &212214139127926824
@@ -105,9 +104,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 846005405
+  m_SortingLayer: 2
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 664851cb4bc2fc54686c05b7b0eb4bef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -59,8 +59,12 @@ public class Fish : MonoBehaviour
 
     public void Randomize()
     {
-        int rand = Random.Range(0, (int)FishType.Total);
-        //If bonus becomes a thing, give it less than a 1/3 chance.
-        Type = (FishType)rand;
+        int rand = Random.Range(0, 10);
+        if (rand <= 5)
+            Type = FishType.Tasty;
+        else if (rand < 10)
+            Type = FishType.Shark;
+        else
+            Type = FishType.Turtle;
     }
 }
