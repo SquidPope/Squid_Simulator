@@ -36,15 +36,25 @@ public class Node : MonoBehaviour
         rend = gameObject.GetComponent<Renderer>();
         HasImpulse = false;
 
-        Init();
-    }
-
-    public void Init()
-    {
         //ToDo: make sure no number in name gets id 0
         Regex regex = new Regex("[0-9]+");
         Match match = regex.Match(gameObject.name);
         Int32.TryParse(match.Value, out id);
+    }
+
+    public int GetID()
+    {
+        return id;
+    }
+
+    public void SetID(int newID)
+    {
+        id = newID;
+    }
+
+    public Vector2 GetPosition()
+    {
+        return new Vector2(transform.position.x, transform.position.y);
     }
 
     public void SelectNode()

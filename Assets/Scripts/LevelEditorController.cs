@@ -2,6 +2,7 @@
 
 public class LevelEditorController : MonoBehaviour
 {
+    //ToDo: Add input to name the level (on save?)
     //ToDo: Add input for NeuronLimit, it has to change per level
     //ToDo: Add a way to move placed nodes?
     //ToDo: Add a way to mark a node or nodes as start
@@ -80,13 +81,11 @@ public class LevelEditorController : MonoBehaviour
                 if (currentPrefab != null && node == null)
                 {
                     //ToDo: Limit number of nodes placed/how close together they can be placed
-                    Debug.Log("placing " + currentPrefab.name);
                     Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     Vector3 newPos = new Vector3(Mathf.Round(mousePos.x), Mathf.Round(mousePos.y), 0f);
-                    Debug.Log("Mouse pos: " + mousePos);
-                    GameObject newNode = Instantiate(currentPrefab, newPos, Quaternion.identity);
-                    newNode.name = "Node " + nodeID;
-                    newNode.GetComponent<Node>().Init();//yuck
+
+                    Node newNode = Instantiate(currentPrefab, newPos, Quaternion.identity).GetComponent<Node>();
+                    newNode.SetID(nodeID);
                     nodeID++; //could use this to limit # of nodes, it's always 1 more than the current nodes.
                 }
                 else if (currentPrefab == null)
