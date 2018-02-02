@@ -8,7 +8,7 @@ public class Node : MonoBehaviour
     [SerializeField]
     List<Node> connectedNodes;
 
-    public int id;
+    public int id = 0;
     public bool isStart;
 
     private bool hasImpulse;
@@ -36,6 +36,12 @@ public class Node : MonoBehaviour
         rend = gameObject.GetComponent<Renderer>();
         HasImpulse = false;
 
+        Init();
+    }
+
+    public void Init()
+    {
+        //ToDo: make sure no number in name gets id 0
         Regex regex = new Regex("[0-9]+");
         Match match = regex.Match(gameObject.name);
         Int32.TryParse(match.Value, out id);
@@ -65,5 +71,14 @@ public class Node : MonoBehaviour
             return true;
 
         return false;
+    }
+
+    public bool AddConnectedNode(Node node)
+    {
+        if (connectedNodes.Contains(node))
+            return false;
+
+        connectedNodes.Add(node);
+        return true;
     }
 }

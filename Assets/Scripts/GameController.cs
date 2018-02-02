@@ -1,12 +1,27 @@
 ﻿using UnityEngine;
 
-public enum GameState { Brain, GameOver, MainMenu, Squid }
+public enum GameState { Brain, GameOver, LevelEditor, MainMenu, Squid }
 public class GameController : MonoBehaviour
 {
     GameState state;
     int neuronLimit = 9;
     public int totalNeurons = 0;
     public int score = 0; //ToDo: count # of nodes selected per puzzle, reward fewer.
+
+    static GameController instance;
+    public static GameController Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                GameObject go = GameObject.FindGameObjectWithTag("GameController");
+                instance = go.GetComponent<GameController>();
+            }
+
+            return instance;
+        }
+    }
 
     public GameState State
     {
@@ -39,25 +54,11 @@ public class GameController : MonoBehaviour
         }
     }
 
-    static GameController instance;
-    public static GameController Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                GameObject go = GameObject.FindGameObjectWithTag("GameController");
-                instance = go.GetComponent<GameController>();
-            }
-
-            return instance;
-        }
-    }
-
     private void Start()
     {
 
         State = GameState.MainMenu;
+        DontDestroyOnLoad(gameObject);
     }
 
 }

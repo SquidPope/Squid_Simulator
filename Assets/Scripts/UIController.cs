@@ -23,6 +23,11 @@ public class UIController : MonoBehaviour
         }
     }
 
+    public void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void HelpButton()
     {
         instructionsImage.SetActive(!instructionsImage.activeSelf);
@@ -31,12 +36,12 @@ public class UIController : MonoBehaviour
         {
             squidInstructions.SetActive(false);
             brainInstructions.SetActive(instructionsImage.activeSelf);
-        }  
+        }
         else if (GameController.Instance.State == GameState.Squid)
         {
             brainInstructions.SetActive(false);
             squidInstructions.SetActive(instructionsImage.activeSelf);
-        } 
+        }
     }
 
     public void UpdateScore()
@@ -50,7 +55,7 @@ public class UIController : MonoBehaviour
         if (state == GameState.Brain)
         {
             brainStateObject.SetActive(true);
-            
+
             helpButton.SetActive(true);
             mainMenuObject.SetActive(false);
             scoreImage.SetActive(true);
@@ -90,6 +95,6 @@ public class UIController : MonoBehaviour
             finalScoreText.text = "Final Score: " + GameController.Instance.Score;
 
         }
-        
+
     }
 }

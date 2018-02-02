@@ -5,18 +5,26 @@ public class InputController : MonoBehaviour
 {
     [SerializeField]
     GameObject quitDialogue;
-    
+
     Node selectedNode = null;
 
     private void Start()
     {
         quitDialogue.SetActive(false);
+        DontDestroyOnLoad(gameObject);
     }
-    
+
     public void PlayButton()
     {
         GameController.Instance.State = GameState.Squid;
+        SceneManager.LoadScene("level");
         PuzzleController.Instance.StartPuzzle();
+    }
+
+    public void LevelEditorButton()
+    {
+        GameController.Instance.State = GameState.LevelEditor;
+        SceneManager.LoadScene("levelEditorTest");
     }
 
     public void QuitButton()
@@ -66,7 +74,7 @@ public class InputController : MonoBehaviour
         if (hit != null && hit.collider != null)
         {
             n = hit.collider.GetComponent<Node>();
-        } 
+        }
         else
         {
             n = null;
@@ -87,7 +95,7 @@ public class InputController : MonoBehaviour
                 //select clickedNode, clickedNode.HasImpulse = true
 
                 //if selectedNode == null
-                
+
                 //if selectedNode is null
                 //??
                 //if it is connected to selectedNode

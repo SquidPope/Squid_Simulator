@@ -1,0 +1,125 @@
+﻿using UnityEngine;
+
+public class LevelEditorController : MonoBehaviour
+{
+    //ToDo: Add input for NeuronLimit, it has to change per level
+    //ToDo: Add a way to move placed nodes?
+    //ToDo: Add a way to mark a node or nodes as start
+    //ToDo: Add input for how much a new node 'snaps' to the grid or, how big the grid is (Slider: 0, 0.5, 0.1, 0.05, 0.01?)
+    //ToDo: Draw a grid displaying the 'snap' distances
+
+    public GameObject currentPrefab = null;
+
+    Node currentNode = null;
+    int nodeID = 0;
+
+    static LevelEditorController instance;
+    public static LevelEditorController Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                GameObject go = GameObject.FindGameObjectWithTag("LevelEditorController");
+                instance = go.GetComponent<LevelEditorController>();
+            }
+
+            return instance;
+        }
+    }
+
+    public Node CurrentNode
+    {
+        get { return currentNode; }
+        set
+        {
+            if (currentNode != null)
+                currentNode.DeselectNode();
+
+            currentNode = value;
+
+            if (currentNode != null)
+                currentNode.SelectNode();
+        }
+    }
+
+    public void SetCurrentPrefab(GameObject prefab)
+    {
+        //ToDo: validation check?
+        currentPrefab = prefab;
+    }
+
+
+    Node GetNodeUnderMouse()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+
+        Node n;
+        if (hit != null && hit.collider != null)
+        {
+            n = hit.collider.GetComponent<Node>();
+        }
+        else
+        {
+            n = null;
+        }
+
+        return n;
+    }
+
+    void Update()
+    {
+        if (GameController.Instance.State == GameState.LevelEditor)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                //ToDo: Make sure it won't collide with another node
+                Node node = GetNodeUnderMouse();
+
+                if (currentPrefab != null && node == null)
+                {
+                    //ToDo: Limit number of nodes placed/how close together they can be placed
+                    Debug.Log("placing " + currentPrefab.name);
+                    Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Vector3 newPos = new Vector3(Mathf.Round(mousePos.x), Mathf.Round(mousePos.y), 0f);
+                    Debug.Log("Mouse pos: " + mousePos);
+                    GameObject newNode = Instantiate(currentPrefab, newPos, Quaternion.identity);
+                    newNode.name = "Node " + nodeID;
+                    newNode.GetComponent<Node>().Init();//yuck
+                    nodeID++; //could use this to limit # of nodes, it's always 1 more than the current nodes.
+                }
+                else if (currentPrefab == null)
+                {
+                    Debug.Log("oh noes");
+                }
+            }
+            else if (Input.GetMouseButtonUp(1))
+            {
+                Node node = GetNodeUnderMouse();
+
+                if (node == null)
+                {
+                    Debug.Log("current set to null");
+                    CurrentNode = null;
+                }
+                else
+                {
+                    if (CurrentNode == null)
+                    {
+                        Debug.Log("setting current");
+                        CurrentNode = node;
+                    }
+                    else
+                    {
+                        Debug.Log("connecting");
+                        if (LineManager.Instance.DoesConnectionExsist(CurrentNode, node)) //ToDo: if the connection exsists, change currentNode to node
+                            CurrentNode = node;
+                        else
+                            LineManager.Instance.DrawLine(CurrentNode, node);
+                    }
+                }
+            }
+        }
+    }
+}
