@@ -55,6 +55,38 @@ public class LevelEditorController : MonoBehaviour
         return nodeID;
     }
 
+    public void BuildLoadedLevel(LevelData level)
+    {
+        nodeID = level.nextNodeID;
+
+        NodeData current;
+
+        //Create the nodes.
+        for (int i = 0; i < level.nodes.Count; i++)
+        {
+            current = level.nodes[i];
+            Vector3 newPos = new Vector3(current.position.x, current.position.y, 0);
+
+            //ToDo: get correct type of prefab for node type
+            Node newNode = Instantiate(currentPrefab, newPos, Quaternion.identity).GetComponent<Node>();
+            newNode.SetID(current.id);
+            NodeManager.Instance.AddNode(newNode);
+        }
+
+        //Connect the nodes.
+        for (int i = 0; i < level.nodes.Count; i++)
+        {
+            current = level.nodes[i];
+            for (int j = 0; j < current.connectedNodeIDs.Length; j++)
+            {
+                if (!LineManager.Instance.DoesConnectionExsist(current.id, current.connectedNodeIDs[j]))
+                {
+                    LineManager.Instance.DrawLine(current.id, current.connectedNodeIDs[j]);
+                }
+            }
+        }
+    }
+
     Node GetNodeUnderMouse()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

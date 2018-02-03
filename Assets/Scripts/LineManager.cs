@@ -9,7 +9,6 @@ public class LineManager : MonoBehaviour
     GameObject linePrefab;
 
     List<LineRenderer> lines;
-    List<Node> nodes;
     List<KeyValuePair<int, int>> nodeConnections;
 
     static LineManager instance;
@@ -29,19 +28,10 @@ public class LineManager : MonoBehaviour
 
     private void Start()
     {
-        nodes = new List<Node>();
         nodeConnections = new List<KeyValuePair<int, int>>();
 
         //Move this to an OnSceneLoad?
-        GameObject[] nodeArray = GameObject.FindGameObjectsWithTag("Node");
-
-        if (nodeArray.Length == 0)
-            return;
-
-        for (int i = 0; i < nodeArray.Length; i++)
-        {
-            nodes.Add(nodeArray[i].GetComponent<Node>());
-        }
+        List<Node> nodes = NodeManager.Instance.GetNodes();
 
         foreach (Node n in nodes)
         {
@@ -63,6 +53,25 @@ public class LineManager : MonoBehaviour
             return true;
 
         return false;
+    }
+
+    public bool DoesConnectionExsist(int idA, int idB)
+    {
+        Node nodeA = NodeManager.Instance.GetNodeByID(idA);
+        Node nodeB = NodeManager.Instance.GetNodeByID(idB);
+
+        if (nodeConnections.Contains(new KeyValuePair<int, int> (nodeA.id, nodeB.id)) || nodeConnections.Contains(new KeyValuePair<int, int>(nodeB.id, nodeA.id)))
+            return true;
+
+        return false;
+    }
+
+    public void DrawLine(int idA, int idB)
+    {
+        Node nodeA = NodeManager.Instance.GetNodeByID(idA);
+        Node nodeB = NodeManager.Instance.GetNodeByID(idB);
+
+        DrawLine(nodeA, nodeB);
     }
 
     public void DrawLine(Node nodeA, Node nodeB)

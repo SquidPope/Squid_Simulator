@@ -38,27 +38,34 @@ public class XMLController : MonoBehaviour
 	XmlSerializer serializer;
 	string path;
 
-	List<LevelData> loadedLevels;
+	LevelData loadedLevel;//Save/Load one level for now.
 
 	void Start()
 	{
-		loadedLevels = new List<LevelData>();
+		//loadedLevels = new List<LevelData>();
 		path = Application.persistentDataPath; // + "\\SQUIDLevels";
         serializer = new XmlSerializer(typeof (LevelData));
 	}
 
 	void Load()
 	{
+		string levelPath = path + "\\" + "SQUID LEVEL TEST.squidLevel";
 		//Find level files (if any) and load them: list UI so one can be selected
-		//if (!File.Exists(path))
-            //make one
+		if (File.Exists(levelPath))
+        {
+			//ToDo: Load "base" levels from the Resources folder
+			using (FileStream stream = new FileStream(levelPath, FileMode.Open))
+			{
+				loadedLevel = serializer.Deserialize(stream) as LevelData;
+			}
 
-		//ToDo: Load "base" levels from the Resources folder
+			Debug.Log("loadedLevel: " + loadedLevel.name);
+			LevelEditorController.Instance.BuildLoadedLevel(loadedLevel);
+		}
 	}
 
 	public void Save()
 	{
-		Debug.Log("saving");
 		//Serialize level and save it
 		LevelData level = new LevelData("test", LevelEditorController.Instance.GetNodeID());
 
@@ -95,9 +102,12 @@ public class XMLController : MonoBehaviour
         }
 	}
 
+//ToDo: remove when UI works
 	void Update()
 	{
 		if (Input.GetKeyUp(KeyCode.S))
 			Save();
+		else if (Input.GetKeyUp(KeyCode.L))
+			Load();
 	}
 }
