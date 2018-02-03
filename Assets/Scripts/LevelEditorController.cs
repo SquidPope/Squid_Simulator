@@ -50,6 +50,10 @@ public class LevelEditorController : MonoBehaviour
         currentPrefab = prefab;
     }
 
+    public int GetNodeID()
+    {
+        return nodeID;
+    }
 
     Node GetNodeUnderMouse()
     {
@@ -69,12 +73,29 @@ public class LevelEditorController : MonoBehaviour
         return n;
     }
 
+    bool IsUIUnderMouse()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 1, 1 << 8);
+
+        if (hit == null || hit.collider == null)
+            return false;
+
+        if (hit.collider.gameObject.layer == 5)
+            return true;
+
+        return false;
+    }
+
     void Update()
     {
         if (GameController.Instance.State == GameState.LevelEditor)
         {
             if (Input.GetMouseButtonUp(0))
             {
+                if (IsUIUnderMouse())
+                    return;
+
                 //ToDo: Make sure it won't collide with another node
                 Node node = GetNodeUnderMouse();
 
@@ -95,6 +116,9 @@ public class LevelEditorController : MonoBehaviour
             }
             else if (Input.GetMouseButtonUp(1))
             {
+                if (IsUIUnderMouse())
+                    return;
+
                 Node node = GetNodeUnderMouse();
 
                 if (node == null)

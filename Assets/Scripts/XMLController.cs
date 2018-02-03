@@ -7,7 +7,9 @@ using UnityEngine;
 
 public class LevelData
 {
+	[XmlAttribute("name")]
 	public string name;
+
 	public int nextNodeID;
 	public List<NodeData> nodes;
 
@@ -41,7 +43,7 @@ public class XMLController : MonoBehaviour
 	void Start()
 	{
 		loadedLevels = new List<LevelData>();
-		path = Application.persistentDataPath + "\\SQUIDLevels";
+		path = Application.persistentDataPath; // + "\\SQUIDLevels";
         serializer = new XmlSerializer(typeof (LevelData));
 	}
 
@@ -56,14 +58,15 @@ public class XMLController : MonoBehaviour
 
 	public void Save()
 	{
+		Debug.Log("saving");
 		//Serialize level and save it
-		LevelData level = new LevelData();
+		LevelData level = new LevelData("test", LevelEditorController.Instance.GetNodeID());
 
-		List<Node> nodes = LineManager.Instance.GetLevelNodes();
+		GameObject[] nodeArray = GameObject.FindGameObjectsWithTag("Node");
 
-		for (int i = 0; i < nodes.Count; i++)
+		for (int i = 0; i < nodeArray.Length; i++)
 		{
-			Node node = nodes[i];
+			Node node = nodeArray[i].GetComponent<Node>();
 			NodeData data = new NodeData();
 			data.id = node.GetID();
 			data.position = node.GetPosition();
@@ -71,7 +74,8 @@ public class XMLController : MonoBehaviour
 			data.connectedNodeIDs = new int[node.GetConnectedNodes().Count];
 			for (int j = 0; j < node.GetConnectedNodes().Count; j++)
 			{
-				data.connectedNodeIDs[j] = node.GetConnectedNodes()[j].GetID();
+				if (node.GetConnectedNodes()[j] != null)
+					data.connectedNodeIDs[j] = node.GetConnectedNodes()[j].GetID();
 			}
 
 			level.nodes.Add(data);
@@ -79,5 +83,21 @@ public class XMLController : MonoBehaviour
 
 		level.name = "SQUID LEVEL TEST";
 		level.nextNodeID = level.nodes.Count;
+		Debug.Log("nodes count " + level.nextNodeID);
+
+		path += "\\" + level.name + ".squidLevel"; //How will I load without knowing the file names ahead of time?
+		Debug.Log("of Exile: " + path);
+		//Save to a file
+		using (FileStream stream = new FileStream(path, FileMode.Create))
+        {
+            XmlTextWriter writer = new XmlTextWriter(stream, System.Text.Encoding.UTF8);
+            serializer.Serialize(writer, level);
+        }
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyUp(KeyCode.S))
+			Save();
 	}
 }

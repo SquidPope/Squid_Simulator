@@ -27,11 +27,6 @@ public class LineManager : MonoBehaviour
         }
     }
 
-    public List<Node> GetLevelNodes()
-    {
-        return nodes;
-    }
-
     private void Start()
     {
         nodes = new List<Node>();
