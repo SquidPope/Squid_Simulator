@@ -14,6 +14,7 @@ public class LevelEditorController : MonoBehaviour
 
     Node currentNode = null;
     int nodeID = 0;
+    int layerMask = 1 << 5; //The UI Layer.
 
     static LevelEditorController instance;
     public static LevelEditorController Instance
@@ -109,10 +110,12 @@ public class LevelEditorController : MonoBehaviour
     bool IsUIUnderMouse()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 1, 1 << 8);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 1, layerMask);
 
         if (hit == null || hit.collider == null)
             return false;
+
+        Debug.Log("layer: " + hit.collider.gameObject.layer);
 
         if (hit.collider.gameObject.layer == 5)
             return true;
