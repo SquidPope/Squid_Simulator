@@ -68,9 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa5d13125d949348912dacafb407c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedNodes:
-  - {fileID: 0}
-  - {fileID: 0}
+  connectedNodes: []
   id: 0
   isStart: 0
 --- !u!212 &212214139127926824

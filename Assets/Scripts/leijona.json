@@ -1,0 +1,44 @@
+{
+	"format": "html",
+	"outputFile": "line-count.html",
+	"count": {
+		"comments": true,
+		"trivial": true,
+		"empty": false
+	},
+	"commentCharacters": [
+		"/*",
+		"*/",
+		"* ",
+		"//",
+		"#",
+		"<!--"
+	],
+	"exclude": {
+		"paths": [
+			".git/",
+			"node_modules/",
+			"vendor/",
+			"package-lock.json",
+			"package.json",
+			"line-count.txt",
+			"line-count.html",
+			"templates/"
+		],
+		"fileTypes": [
+			"flac",
+			"gif",
+			"jpeg",
+			"jpg",
+			"m4a",
+			"mov",
+			"mp3",
+			"ogg",
+			"png",
+			"svg",
+			"tiff",
+			"wav",
+            "meta"
+		]
+	}
+}

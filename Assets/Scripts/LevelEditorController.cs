@@ -7,7 +7,8 @@ public class LevelEditorController : MonoBehaviour
     //ToDo: Add a way to move placed nodes?
     //ToDo: Add a way to mark a node or nodes as start
     //ToDo: Add input for how much a new node 'snaps' to the grid or, how big the grid is (Slider: 0, 0.5, 0.1, 0.05, 0.01?)
-    //ToDo: Draw a grid displaying the 'snap' distances
+    //ToDo: Draw a grid displaying the 'snap' distances\
+    //ToDo: Add a way to delete nodes that have been placed.
 
     public GameObject currentPrefab = null;
 
@@ -168,10 +169,15 @@ public class LevelEditorController : MonoBehaviour
                     else
                     {
                         Debug.Log("connecting");
-                        if (LineManager.Instance.DoesConnectionExsist(CurrentNode, node)) //ToDo: if the connection exsists, change currentNode to node
-                            CurrentNode = node;
+                        if (LineManager.Instance.DoesConnectionExsist(CurrentNode, node))
+                            CurrentNode = node; //Is this intuitive?
                         else
+                        {
+                            currentNode.AddConnectedNode(node);
+                            node.AddConnectedNode(currentNode);
                             LineManager.Instance.DrawLine(CurrentNode, node);
+                        }
+                            
                     }
                 }
             }
