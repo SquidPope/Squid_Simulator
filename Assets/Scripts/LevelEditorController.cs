@@ -55,6 +55,7 @@ public class LevelEditorController : MonoBehaviour
         get { return levelName; } //ToDo: move part of this to NodeManager? And set connected nodes list for each node.
         set
         {
+            //ToDo: ask XMLController if a level with that name exists, then ask if player is sure about overwriting it.
             nameInput.text = value; //placeholder text?
             levelName = value;
         }
@@ -133,11 +134,12 @@ public class LevelEditorController : MonoBehaviour
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 1, uiLayerMask);
+        
+        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+            return true;
 
         if (hit.collider == null)
             return false;
-
-        Debug.Log("layer: " + hit.collider.gameObject.layer);
 
         if (hit.collider.gameObject.layer == 5)
             return true;
