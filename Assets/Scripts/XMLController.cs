@@ -5,6 +5,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
 
+[System.Serializable]
 public class LevelData
 {
 	[XmlAttribute("name")]
@@ -25,6 +26,7 @@ public class LevelData
 
 public class NodeData
 {
+	[XmlAttribute("id")]
 	public int id;
 	public Vector2 position; //z is always 0
 	public int[] connectedNodeIDs;
@@ -35,33 +37,40 @@ public class NodeData
 
 public class XMLController : MonoBehaviour
 {
-	XmlSerializer serializer;
-	string path;
 
-	LevelData loadedLevel;//Save/Load one level for now.
+	const string fileType = ".squidLevel";
+
+	XmlSerializer serializer;
+	string path; //directory path
+	List<LevelData> loadedLevels;
 
 	void Start()
 	{
-		//loadedLevels = new List<LevelData>();
-		path = Application.persistentDataPath; // + "\\SQUIDLevels";
+		loadedLevels = new List<LevelData>();
+		path = Application.persistentDataPath;
         serializer = new XmlSerializer(typeof (LevelData));
 	}
 
 	void Load()
 	{
-		string levelPath = path + "\\" + "SQUID LEVEL TEST.squidLevel";
-		//Find level files (if any) and load them: list UI so one can be selected
-		if (File.Exists(levelPath))
-        {
+		string[] filePaths = Directory.GetFiles(path, "*" + fileType);
+		Debug.Log(filePaths.Length + " files found");
+		
+		LevelData loadedLevel;
+		foreach (string file in filePaths)
+		{
 			//ToDo: Load "base" levels from the Resources folder
-			using (FileStream stream = new FileStream(levelPath, FileMode.Open))
+			using (FileStream stream = new FileStream(file, FileMode.Open))
 			{
 				loadedLevel = serializer.Deserialize(stream) as LevelData;
 			}
 
+			loadedLevels.Add(loadedLevel);
 			Debug.Log("loadedLevel: " + loadedLevel.name);
-			LevelEditorController.Instance.BuildLoadedLevel(loadedLevel);
 		}
+
+		LevelEditorController.Instance.LevelName = loadedLevels[0].name;
+		LevelEditorController.Instance.BuildLoadedLevel(loadedLevels[0]); //ToDo: move part of this to NodeManager? And set connected nodes list for each node.
 	}
 
 	public void Save()
@@ -88,18 +97,35 @@ public class XMLController : MonoBehaviour
 			level.nodes.Add(data);
 		}
 
-		level.name = "SQUID LEVEL TEST";
-		level.nextNodeID = level.nodes.Count;
-		Debug.Log("nodes count " + level.nextNodeID);
+		Debug.Log("saving " + LevelEditorController.Instance.LevelName);
 
-		path += "\\" + level.name + ".squidLevel"; //How will I load without knowing the file names ahead of time?
-		Debug.Log("of Exile: " + path);
-		//Save to a file
-		using (FileStream stream = new FileStream(path, FileMode.Create))
-        {
-            XmlTextWriter writer = new XmlTextWriter(stream, System.Text.Encoding.UTF8);
-            serializer.Serialize(writer, level);
-        }
+		if (LevelEditorController.Instance.LevelName == string.Empty)
+			LevelEditorController.Instance.LevelName = "blank";
+
+		level.name = LevelEditorController.Instance.LevelName;
+		level.nextNodeID = level.nodes.Count;
+
+		//ToDo: check whether we need \ or / cross-platform.
+		string filePath = path + "\\" + level.name + fileType; //How will I load without knowing the file names ahead of time?
+		Debug.Log("of Exile: " + filePath);
+
+		if (File.Exists(filePath))
+		{
+			//Save to a file
+			using (FileStream stream = new FileStream(filePath, FileMode.Create)) //Do we Create or Append if the level already exsists?
+			{
+				XmlTextWriter writer = new XmlTextWriter(stream, System.Text.Encoding.UTF8);
+				serializer.Serialize(writer, level);
+			}
+		}
+		else
+		{
+			using (FileStream stream = new FileStream(filePath, FileMode.CreateNew))
+			{
+				XmlTextWriter writer = new XmlTextWriter(stream, System.Text.Encoding.UTF8);
+				serializer.Serialize(writer, level);
+			}
+		}
 	}
 
 //ToDo: remove when UI works

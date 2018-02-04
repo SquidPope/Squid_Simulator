@@ -38,7 +38,9 @@
 			"svg",
 			"tiff",
 			"wav",
-            "meta"
+            "meta",
+            "json",
+            "html"
 		]
 	}
 }

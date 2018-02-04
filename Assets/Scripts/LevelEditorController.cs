@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelEditorController : MonoBehaviour
 {
@@ -7,14 +8,17 @@ public class LevelEditorController : MonoBehaviour
     //ToDo: Add a way to move placed nodes?
     //ToDo: Add a way to mark a node or nodes as start
     //ToDo: Add input for how much a new node 'snaps' to the grid or, how big the grid is (Slider: 0, 0.5, 0.1, 0.05, 0.01?)
-    //ToDo: Draw a grid displaying the 'snap' distances\
+    //ToDo: Draw a grid displaying the 'snap' distances
     //ToDo: Add a way to delete nodes that have been placed.
 
     public GameObject currentPrefab = null;
+    public InputField nameInput;
 
     Node currentNode = null;
     int nodeID = 0;
-    int layerMask = 1 << 5; //The UI Layer.
+    string levelName = "";
+
+    const int uiLayerMask = 1 << 5; //The UI Layer.
 
     static LevelEditorController instance;
     public static LevelEditorController Instance
@@ -46,6 +50,16 @@ public class LevelEditorController : MonoBehaviour
         }
     }
 
+    public string LevelName
+    {
+        get { return levelName; } //ToDo: move part of this to NodeManager? And set connected nodes list for each node.
+        set
+        {
+            nameInput.text = value; //placeholder text?
+            levelName = value;
+        }
+    }
+
     public void SetCurrentPrefab(GameObject prefab)
     {
         //ToDo: validation check?
@@ -62,6 +76,8 @@ public class LevelEditorController : MonoBehaviour
         nodeID = level.nextNodeID;
 
         NodeData current;
+
+        Debug.Log("level building: " + levelName);
 
         //Create the nodes.
         for (int i = 0; i < level.nodes.Count; i++)
@@ -89,13 +105,19 @@ public class LevelEditorController : MonoBehaviour
         }
     }
 
+    //Method for InputField.
+    public void ChangeLevelName(string name)
+    {
+        levelName = name;
+    }
+
     Node GetNodeUnderMouse()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
         Node n;
-        if (hit != null && hit.collider != null)
+        if (hit.collider != null)
         {
             n = hit.collider.GetComponent<Node>();
         }
@@ -110,9 +132,9 @@ public class LevelEditorController : MonoBehaviour
     bool IsUIUnderMouse()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 1, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, 1, uiLayerMask);
 
-        if (hit == null || hit.collider == null)
+        if (hit.collider == null)
             return false;
 
         Debug.Log("layer: " + hit.collider.gameObject.layer);
@@ -123,7 +145,7 @@ public class LevelEditorController : MonoBehaviour
         return false;
     }
 
-    void Update()
+    void Update() //ToDo: Move this to InputManager
     {
         if (GameController.Instance.State == GameState.LevelEditor)
         {

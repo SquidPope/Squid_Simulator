@@ -31,6 +31,7 @@ public class NodeManager : MonoBehaviour
 		if (!nodes.Contains(node))
 			nodes.Add(node);
 	}
+
 	public List<Node> GetNodes()
 	{
 		return nodes;
